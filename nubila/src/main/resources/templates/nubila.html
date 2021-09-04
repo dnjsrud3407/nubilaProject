@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!--  <link rel="shortcut icon" href="img/nubila.ico"> 추후 파비콘 설정-->
+  <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+  <link rel="stylesheet" href="css/haonstyle.css">
+  <!--    font awesome   -->
+  <script src="https://kit.fontawesome.com/12cca3ed35.js" crossorigin="anonymous"></script>
+  <script type="text/javascript" th:src="@{/js/header.js}" defer></script>
+  <title>NUBILA🎵</title>
+</head>
+<body>
+<div th:replace="fragments/header :: nav"></div>
+<div id="main-container">
+  <div th:replace="fragments/mainImage :: mainImage"></div>
+  <hr>
+  <div id="section-tip">
+    <h1>어떻게 이용하나요?</h1>
+  </div>
+</div>
+</body>
+</html>

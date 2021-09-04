@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/haonstyle.css">
+    <!--    font awesome   -->
+    <script src="https://kit.fontawesome.com/12cca3ed35.js" crossorigin="anonymous"></script>
+    <title>NUBILA🎵</title>
+</head>
+<body>
+
+<!-- fragments/header.html을 가져옵니다. -->
+<!-- navbar -->
+<div th:replace="fragments/header :: nav"> </div>
+<th:block th:text="${session.user_login_id}">0</th:block>
+<ul>
+    <li sec:authentication='name'>name</li>
+    <li sec:authentication='user_login_id'>user_login_id</li>
+</ul>
+<hr>
+<!--<th:block th:text="${session.user_role}">0</th:block>-->
+<hr>
+<span sec:authentication="authorities"></span></span>
+<div id="main-container">
+    <div id="section-intro">
+        <div id="introduction">
+            <h1>
+                NUBILA?<br>
+            </h1>
+            <h2>
+                누비자 타고<br>
+                창원 곳곳을 맘껏 누벼라!<br>
+            </h2>
+        </div>
+    </div>
+    <hr>
+    <div id="section-tip">
+        <h1>어떻게 이용하나요?</h1>
+    </div>
+</div>
+
+<script>
+    const toggleBtn = document.querySelector(".nav-toggle-btn");
+    const menu = document.querySelector(".nav-menu");
+    toggleBtn.addEventListener('click', ()=>{
+        menu.classList.toggle('active');
+    });
+
+</script>
+</body>
+</html>

@@ -1,0 +1,336 @@
+body{
+    min-width: 320px;
+    margin: 0;
+    color: #4a4a4a;
+}
+a {
+    text-decoration: none;
+    color:inherit;
+}
+ul {
+    padding: 0;
+    margin-top: 1rem;
+    list-style: none;
+}
+button {
+    cursor: pointer;
+}
+#header {
+    margin: auto;
+    max-width: 1200px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 1.5rem;
+}
+#header h2{ margin: 1rem;}
+/*#header h2,*/
+#header li{
+    font-weight: 600;
+    padding: .5em;
+}
+.nav-menu, .nav-member{
+    display: flex;
+}
+.nav-menu a, .nav-member a {
+    color: #4a4a4a;
+}
+/*:is(.nav-menu, .nav-member) a:hover{*/
+.nav-menu a:hover, .nav-member a:hover{
+    color: #1dc078;
+}
+.nav-logo{
+    flex-grow:1;
+    font-size: 1.5em;
+    font-weight: 800;
+    text-align: center;
+}
+.nav-menu{flex-grow: 3}
+.nav-member{
+    flex-grow:1;
+    justify-content: flex-end;
+}
+.nav-member li {
+    background-color: rgba(69, 120, 220, 0.1);
+    border-radius: 10px;
+    margin-left: 6px;
+}
+.nav-member button {
+    border: none;
+    font-size: 1em;
+    background-color: transparent;
+    font-weight: 600;
+    color: #4a4a4a;
+}
+.nav-toggle-btn {
+    display: none;
+}
+#main-container {
+}
+#main-section {
+    width: 80%;
+    margin: auto;
+    padding: 1rem 0;
+}
+#section-intro {
+    background-color: #77cc98;
+    background-image: url("../img/inflearn_bg.png");
+    background-size: auto;
+    background-position: 50%;
+    color: white;
+}
+#introduction{
+    margin: 0;
+    padding: 3rem;
+}
+
+
+/* 반응형 헤더 */
+@media screen and (max-width: 768px){
+    #header {
+        flex-wrap: wrap;
+    }
+    .nav-menu {
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        order: 4;
+        flex: 1 1 100%;
+    }
+    .nav-member{
+        order: 3;
+        flex: 1;
+        white-space: nowrap;
+    }
+    .nav-toggle-btn {
+        order: 1;
+        flex: 1 4;
+        display: inline-block;
+        font-size: 1.2rem;
+    }
+    .nav-logo {
+        order: 2;
+        flex: 1;
+        flex-basis: 33%;
+    }
+    .nav-menu.active {
+        display:flex;
+    }
+    #main-container {
+        font-size: 14px;
+    }
+    #section-intro {
+        background-size: cover;
+    }
+}
+
+@media screen and (max-width: 560px) {
+    /* 반응형 폰트 사이즈 */
+    body {
+        font-size: 12px
+    }
+    /* 반응형 북마크 리스트 */
+    #bookmark-route.sm-hidden, #bookmark-station.sm-hidden {
+        display: none;
+    }
+    .tab-menu>li>a {
+        cursor:pointer;
+    }
+    .tab-menu>li>a:hover {
+        color: #1dc078;
+    }
+    .tab-menu>li.active>a {
+        color: #4a4a4a;
+    }
+}
+
+/* 북마크 section */
+#bookmark-container {
+    max-width: 1200px;
+    margin:auto;
+    padding: 0 1.5rem;
+}
+#bookmark-container ul, .list-section ul{
+    margin: .4em .5em;
+}
+.tab-menu {
+    display: flex;
+    white-space: nowrap;
+    margin-bottom: 0;
+}
+.tab-menu a {
+    font-weight: 600;
+    color: #909090;
+}
+#bookmark-section{
+    display: flex;
+}
+#bmark-station-btn, #bmark-route-btn {
+    flex: 1;
+    padding: 8px 10px;
+}
+
+#bookmark-station {
+    flex: 1;
+}
+#bookmark-route {
+    flex: 1;
+}
+#bookmark-station li, #bookmark-route li, .list-section li {
+    cursor: pointer;
+    border: #d3d3d3 1px solid;
+    border-radius: 8px;
+    margin: .5em 0;
+    font-size: .9em;
+    font-weight: 600;
+    padding: 1em;
+}
+#bookmark-route li {
+    display: flex;
+    justify-content: space-between;
+}
+.btn-group {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+}
+#search-btn-group {
+    display: flex;
+}
+ul#search-btn-group {
+    margin:0;
+}
+#search-btn-group>li {
+    border: none;
+    margin: .4em .4em 0 0;
+    background-color: #ffdbb1;
+    padding: .5em;
+}
+#search-btn-group a:hover {
+    color: #ff7b25;
+}
+
+/* bookmark star */
+#bookmark-star {
+    align-self: flex-end;
+    display: inline-block;
+    color: #adadad;
+    font-size: 1.2em;
+}
+#bookmark-star.active {
+    color: #ffc107;
+}
+
+/* search 영역 */
+.search-wrap {
+    max-width: 1200px;
+    margin: auto;
+    padding: 0 1.5rem;
+}
+.search-container {
+    float:left;
+    max-width: 350px;
+    width: 100%;
+    margin-top: .5em;
+}
+.search-container input[type="search"]{
+    font-size: 1em;
+    padding: .3em;
+    width: 80%;
+    margin-bottom: .3em;
+}
+.map-section {
+    max-width: 800px;
+    margin-left: 350px;
+    margin-top: .5em;
+}
+#my-location-btn {
+    float:right;
+}
+.list-section {
+    white-space: nowrap;
+}
+.list-section .selected {
+    background-color: #fff3e2;
+}
+#search-place-section, #search-route-section {
+    display: flex;
+    flex-wrap: wrap;
+}
+#search-place-section.hidden, #search-route-section.hidden {
+    display: none;
+}
+
+#place-search-btn, #search-route-btn, #my-location-btn, #nearby-btn>button {
+    font-weight: 600;
+    background-color: rgba(69, 120, 220, 0.1);
+    padding: .4em .6em;
+    border: none;
+    border-radius: 4px;
+    margin-right: .5em;
+}
+#search-place-section form {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: baseline;
+    margin: 0 .5em;
+}
+#search-route-section form {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    margin: 0 .5em;
+}
+#search-route-section input {
+    width: 100%;
+    max-width: 300px;
+}
+#search-route-section #btn-flex {
+    display: flex;
+    align-items: center;
+}
+#change-direction-btn {
+    width: 2em;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    border: #9c9c9c 1px solid;
+    border-radius: 1em;
+    background-color: white;
+}
+#search-route-section #search-btn-div {
+    flex-basis: 100%;
+    text-align: end;
+}
+.search-wrap li.active>a {
+    color: #4a4a4a;
+}
+.search-wrap>.tab-menu li {
+    padding: 8px 10px;
+    cursor: pointer;
+}
+@media screen and (max-width: 768px) {
+    .search-wrap {
+        display: flex;
+        flex-direction: column;
+    }
+    .map-section {
+        margin-left: 0;
+    }
+    .search-container {
+        order: 2;
+        max-width: none;
+    }
+    #search-route-section, #search-place-section {
+        max-width: 350px;
+    }
+}
+
+
+#img {
+    text-align: center;
+}
+.imgSize {
+    height: 236px;
+}

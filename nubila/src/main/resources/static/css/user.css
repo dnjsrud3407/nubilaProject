@@ -1,0 +1,195 @@
+html, body {
+    height: 100%;
+    width: 100%;
+}
+.login-wrapper {
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding-top: 13%;
+}
+.join-wrapper {
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding-top: 8%;
+}
+
+.nav-logo-big{
+    flex-grow:1;
+    font-size: 2.5em;
+    font-weight: 800;
+    text-align: center;
+    margin-bottom: 10%;
+}
+.container {
+    max-width: 560px;
+}
+.form-div {
+    margin-bottom: 2.5%;
+}
+.element-center {
+    justify-content: space-evenly;
+}
+.SearchDiv {
+    font-size: 1.2em;
+    color: #3e3f3f;
+}
+.btn-ok, .btn-ok:hover {
+    color: #fff;
+    background-color: #57c17c;
+    border-color: #4cae4c;
+    font-weight : bold;
+}
+.btn-ok-white, .btn-ok-white:hover {
+    color: #57c17c;
+    background-color: #fff;
+    border-color: #4cae4c;
+    font-weight : bold;
+}
+.btn-id, .btn-pw, .btn-join, .btn-id:hover, .btn-pw:hover, .btn-join:hover {
+    color: #616161;
+}
+.btn-id {
+    text-align: right;
+}
+.btn-pw {
+    text-align: center;
+}
+.btn-join {
+    text-align: left;
+}
+.btn-submit {
+    display: none;
+    margin-bottom: 10px;
+}
+
+.id_ok, .pw_ok, .pw_confirm_ok, .name_ok, .email_ok {
+    color: #6A82FB;
+    padding-left: 2%;
+    font-size: 0.9em;
+    display: none;
+}
+.id_already, .id_invalid, .pw_invalid, .pw_confirm_invalid, .name_invalid,
+.email_already, .email_invalid, .confirmString_invalid, .confirmString_Confirm_invalid,
+.email_confirm_invalid {
+    color: red;
+    padding-left: 2%;
+    font-size: 0.9em;
+    display: none;
+}
+.invalid_user {
+    color: red;
+    padding-left: 2%;
+    margin-bottom: 1.5%;
+    font-size: 0.9em;
+}
+
+
+/*myInfo*/
+#header-myInfo {
+    margin: auto;
+    max-width: 1200px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 1.5rem;
+}
+#header-myInfo li{
+    font-weight: 600;
+    padding: 8px 10px;
+}
+.nav-menu-myInfo {
+    display: flex;
+}
+.nav-menu-myInfo a {
+    color: #4a4a4a;
+}
+
+.nav-menu-myInfo a:hover {
+    color: #1dc078;
+}
+.active-li{
+    border-bottom: inset;
+    padding-bottom: 5px;
+    border-color: #57c17c;
+}
+.myInfo-container {
+    max-width: 900px;
+    height:auto;
+    text-align:center;
+    margin:auto;
+    padding-top: 5%;
+}
+.myInfo-div {
+    display:inline-block;
+    width:47%;
+    height:215px;
+    margin:1%;
+    text-align: justify;
+    vertical-align: top;
+    border: 1px solid #57c17c;
+    border-radius: 8px;
+    min-width: 400px;
+    padding: 1.5em;
+}
+.myInfo-h4 {
+    margin-bottom: 1rem;
+}
+.password_change_div {
+    display: none;
+}
+.email_change_div {
+    display: none;
+    margin-top: 0.5rem;
+}
+.email_change_btn {
+    float: right;
+}
+.input-w {
+    width: 68%;
+}
+.btn-change {
+    text-align: end;
+    margin-top: 0.4rem;
+}
+.deleteInfo-container {
+    max-width: 900px;
+    height:auto;
+    text-align: left;
+    margin:auto;
+    padding-top: 3%;
+}
+
+
+
+
+@media screen and (max-width: 768px){
+    #header-myInfo {
+        flex-wrap: wrap;
+    }
+    .nav-menu-myInfo {
+        display: -webkit-inline-box;
+        flex-direction: column;
+        align-items: center;
+        order: 4;
+        flex: 1 1 100%;
+    }
+    .nav-menu-myInfo.active {
+        display:flex;
+    }
+}
+
+/* common */
+.font-bold {
+    font-weight: bold;
+}
+.margin-bottom-5 {
+    margin-bottom: 5%;
+}
+.w-45 {
+    width: 45%;
+}
+.mt-5 {
+    margin-top: 5%;
+}

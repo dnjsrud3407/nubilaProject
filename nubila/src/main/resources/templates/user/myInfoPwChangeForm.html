@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <link rel="stylesheet" href="css/haonstyle.css" th:href="@{/css/haonstyle.css}">
+    <link th:href="@{/css/user.css}" rel="stylesheet">
+
+    <script src="https://kit.fontawesome.com/12cca3ed35.js" crossorigin="anonymous"></script>
+    <script type="text/javascript" th:src="@{/js/header.js}" defer></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script th:src="@{/js/myInfo.js}"></script>
+    <title>nubila🎵 마이페이지</title>
+</head>
+<body>
+<div th:replace="fragments/header :: nav"></div>
+<div id="main-container">
+    <div id="section-intro">
+        <div id="introduction">
+            <h1>
+                NUBILA?<br>
+            </h1>
+            <h2>
+                누비자 타고<br>
+                창원 곳곳을 맘껏 누벼라!<br>
+            </h2>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="py-5 font-bold">
+        <h4>비밀번호 재설정</h4>
+    </div>
+    <form th:action method="post" onsubmit="return validation_myInfoPwChangeForm()">
+        <div class="form-div">
+            <label for="password">새 비밀번호</label>
+            <input type="password" id="password" name="password"
+                   class="form-control" oninput="checkPw()">
+            <span class="pw_ok">사용 가능한 비밀번호입니다.</span>
+            <span class="pw_invalid">문자, 숫자, 기호를 조합하여 8~20자를 입력하세요.</span>
+            <input type="hidden" id="pwCheck">
+        </div>
+        <div class="form-div">
+            <label for="password_confirm">비밀번호 확인</label>
+            <input type="password" id="password_confirm" name="password_confirm"
+                   class="form-control" oninput="checkPwConfirm()">
+            <span class="pw_confirm_ok">비밀번호가 일치합니다.</span>
+            <span class="pw_confirm_invalid">비밀번호가 일치하지 않습니다.</span>
+            <input type="hidden" id="pwConfirmCheck">
+        </div>
+        <div class="row">
+            <div class="col">
+                <button class="w-100 btn btn-ok btn-lg" type="submit">확인</button>
+            </div>
+            <div class="col">
+                <button class="w-100 btn btn-ok-white btn-lg"
+                        onclick="history.go(-1)" type="button">취소</button>
+            </div>
+        </div>
+    </form>
+</form>
+</div>
+<script>
+    const toggleBtn = document.querySelector(".nav-toggle-btn");
+    const menu = document.querySelector(".nav-menu");
+    toggleBtn.addEventListener('click', ()=>{
+        menu.classList.toggle('active');
+    });
+
+</script>
+</body>
+</html>

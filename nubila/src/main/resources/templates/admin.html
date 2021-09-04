@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+  <head>
+	  <meta charset="UTF-8">
+	  <meta id="_csrf" name="_csrf" th:content="${_csrf.token}" />
+	  <meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}" />
+	  <title>ADMIN</title>
+	  <link th:href="@{/css/haonstyle.css}" rel="stylesheet" />
+	  <link th:href="@{/css/bootstrap.min.css}"
+			href="../css/bootstrap.min.css" rel="stylesheet" />
+	  <link th:href="@{/css/jmstyle.css}" rel="stylesheet" />
+	  <script type="text/javascript" src="js/header.js" defer></script>
+	  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+	  <script src="https://cdn.ckeditor.com/ckeditor5/29.2.0/classic/ckeditor.js"></script>
+  </head>
+  <body>
+  	<div th:replace="fragments/header :: nav"></div>
+	<section id="content-section">
+		<nav id="side-menu-nav">
+		  <ul id="side-menu">
+			<li id="notice">공지 사항</li>
+			<li id="inquery">문의 사항</li>
+			<li id="user">회원 관리</li>
+		  </ul>
+		</nav>
+		<div id="container">
+			<h1>관리자 페이지</h1>
+			<h2 id="menu-name">메뉴를 선택하세요</h2>
+			<div id="print-section"></div>
+		</div>
+	</section>
+    <!-- 모달 영역 -->
+	<div id="modal" class="modal modal-overlay" tabindex="-1">
+		  <div class="modal-dialog modal-lg">
+			  <div class="modal-content">
+				  <div class="modal-header">
+					  <h4 class="modal-title">상세 보기</h4>
+					  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				  </div>
+				  <div class="modal-body"></div>
+			  </div>
+		  </div>
+	</div>
+
+	
+	<!-- 템플릿 영역 -->
+	<script id="table-template" type="text/template">
+	  <table id='content-list' class="table table-bordered">
+        <thead>
+		  <tr class="table-success">
+			<th scope="col" width="10%">No.</th>
+			<th scope="col" width="70%">제목</th>
+			<th scope="col" width="20%">작성일</th>
+		  </tr>
+        </thead>
+        <tbody>
+        </tbody>
+      </table>
+	</script>
+    <script id="content-list-template" type="text/template">
+		<tr>
+			<td>{id}</td>
+			<td onclick='{func}({id})' id="title-td">{title}</td>
+			<td>{createDate}</td>				
+		</tr>      	
+	</script>
+	<script id="modal-content-template" type="text/template">
+	  <form>
+		<input type="hidden" id="id" value="{id}" />
+		<div class="mb-3">
+			<label for="title" class="col-form-label">제목</label>
+		  <input type="text" id="title" class="form-control" value="{title}" />
+		</div>
+		<div class="mb-3">
+			<label for="content" class="col-form-label">내용</label>
+		  <textarea type="text" id="content" class="form-control" value="{content}">{content}</textarea>
+		</div>
+		<input type="hidden" id="status" value="{status}" />
+		<div class="mb-3 row" id="createDate-div">
+			<label for="createDate" class="col-sm-2 col-form-label" id="createDate-label">등록일</label>
+			<div class="col-sm-10">
+			<input type="text" id="createDate" class="form-control-plaintext" value="{createDate}" readonly="readonly" />
+			</div>
+		</div>
+		  <div class="mb-3 row" id="modifyDate-div">
+			<label for="modifyDate" class="col-sm-2 col-form-label" id="modifyDate-label">수정일</label>
+			<div class="col-sm-10">
+			  <input type="text" id="modifyDate" class="form-control-plaintext" value="{modifyDate}" readonly="readonly" />
+			</div>
+		  </div>
+      </form>
+	  <div class="modal-footer">
+	  <button type="button" id="updatebtn" class="btn btn-success" onclick="updateContent()">수정</button>
+	  <button type="button" id="deletebtn" class="btn btn-warning" onclick="deleteContent({menu})">삭제</button>
+	  </div>
+	</script>
+	<script id="member-template" type="text/template">
+		<div class="col">
+		  <div class="card h-100" style="width: 18rem;">
+			  <div class="card-body">
+				<div>ID: {user_login_id}</div>
+				<div>이름: {username}</div>
+				<div>이메일: {email}</div>
+				<div>권한: {role}</div>
+				<div>가입일: {createTime}</div>
+				<div>최근 정보 수정일: {modifyDate}</div>
+			  </div>
+		  </div>
+		</div>
+	</script>
+    <script type="text/javascript" th:src="@{/js/admin.js}"></script>
+  </body>
+</html>

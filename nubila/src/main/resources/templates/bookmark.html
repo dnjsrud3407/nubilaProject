@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <link rel="stylesheet" href="css/haonstyle.css">
+    <!--    font awesome   -->
+    <script src="https://kit.fontawesome.com/12cca3ed35.js" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="js/header.js" defer></script>
+    <title>Bookmark🎵</title>
+</head>
+<body>
+<!-- fragments/header.html을 가져옵니다. -->
+<!-- navbar -->
+<div th:replace="fragments/header :: nav"> </div>
+
+<div id="main-container">
+    <div id="bookmark-container">
+        <ul class ="tab-menu">
+            <li id="bmark-station-btn" class="active"><a>즐겨찾는 정류소</a></li>
+            <li id="bmark-route-btn"><a>즐겨찾는 경로</a></li>
+        </ul>
+        <div id="bookmark-section">
+            <div id="bookmark-station">
+                <ul id="bookmark-station-list">
+                </ul>
+            </div>
+            <div id="bookmark-route" class="sm-hidden">
+                <ul id="bookmark-route-list">
+
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script type="text/javascript" src="js/bookmark.js" defer></script>
+</html>

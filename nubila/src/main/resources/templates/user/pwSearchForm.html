@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta id="_csrf" name="_csrf" th:content="${_csrf.token}"/>
+    <meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <link rel="stylesheet" href="css/haonstyle.css" th:href="@{/css/haonstyle.css}">
+    <link th:href="@{/css/user.css}" rel="stylesheet">
+
+    <script src="https://kit.fontawesome.com/12cca3ed35.js" crossorigin="anonymous"></script>
+    <script type="text/javascript" th:src="@{/js/header.js}" defer></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script th:src="@{/js/pwSearch.js}"></script>
+    <title>NUBILA🎵 비밀번호 찾기</title>
+    <style>
+        .invalid_user {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+<div th:replace="fragments/header :: nav"></div>
+<div id="main-container">
+    <div id="section-intro">
+        <div id="introduction">
+            <h1>
+                NUBILA?<br>
+            </h1>
+            <h2>
+                누비자 타고<br>
+                창원 곳곳을 맘껏 누벼라!<br>
+            </h2>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="py-5 font-bold">
+        <h4>비밀번호 찾기</h4>
+    </div>
+    <form th:action method="post" onsubmit="return validation_pwSearchForm()">
+        <div class="form-div">
+            <input type="text" id="user_login_id" name="user_login_id"
+                   class="form-control" placeholder="아이디">
+            <span class="id_invalid">아이디를 입력해주세요.</span>
+        </div>
+        <div class="form-div">
+            <input type="text" id="username" name="username"
+                   class="form-control" placeholder="이름">
+            <span class="name_invalid">이름을 입력해주세요.</span>
+        </div>
+        <div class="form-div">
+            <input type="text" id="email" name="email"
+                   class="form-control" placeholder="이메일">
+            <span class="email_invalid">이메일을 입력해주세요.</span>
+        </div>
+        <div class="form-div confirmString-div" style="display: none;">
+            <input type="text" id="confirmString" name="confirmString"
+                   class="form-control" placeholder="인증번호">
+            <span class="confirmString_invalid">인증번호를 입력해주세요.</span>
+            <span class="confirmString_Confirm_invalid">인증번호가 일치하지 않습니다.</span>
+        </div>
+        <div class="invalid_user">
+            일치하는 계정이 없습니다.
+        </div>
+        <div class="row">
+            <div class="col">
+                <button class="w-100 btn btn-ok btn-lg btn-next" onclick="confirm()" type="button">다음</button>
+                <button class="w-100 btn btn-ok-white btn-lg btn-submit" onclick="confirm()" type="button">인증번호 재전송</button>
+                <button class="w-100 btn btn-ok btn-lg btn-submit" type="submit">확인</button>
+            </div>
+        </div>
+    </form>
+</form> <br>
+</div>
+<script>
+    const toggleBtn = document.querySelector(".nav-toggle-btn");
+    const menu = document.querySelector(".nav-menu");
+    toggleBtn.addEventListener('click', ()=>{
+        menu.classList.toggle('active');
+    });
+
+</script>
+</body>
+</html>

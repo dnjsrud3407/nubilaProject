@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        body{
+            margin: 0;
+        }
+        a {
+            text-decoration: none;
+            color:black;
+        }
+        ul {
+            padding: 0;
+        }
+        #header {
+        }
+        .nav-menu {
+            min-width: 400px;
+            width: 80%;
+            margin: auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            list-style: none;
+            padding: 0 3rem 0 1rem;
+        }
+        .nav-menu li{
+            font-weight: 600;
+        }
+        #main {
+            padding: 0 1rem;
+        }
+        @media screen and (max-width: 768px){
+        {
+            }
+        }
+
+    </style>
+
+    <title>NUBILA🎵</title>
+</head>
+<body>
+<div id="header">
+    <ul class="nav-menu">
+        <li class="nav-logo">
+            <a href="/"><h1>NUBILA🎵</h1></a>
+        </li>
+
+        <li><a href=#>정류소/경로 찾기</a></li>
+        <li><a href="/bookmark">⭐즐겨찾기</a></li>
+        <li><a href=#>문의</a></li>
+        <li><a href=#>공지</a></li>
+        <li><a href=#>로그인</a> | <a href="/user/join">회원가입</a></li>
+    </ul>
+</div>
+<div id="main">
+    <h1>Why 누비라?</h1>
+    <hr>
+    <h1>어떻게 이용하나요?</h1>
+</div>
+</body>
+</html>

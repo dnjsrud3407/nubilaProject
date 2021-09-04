@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="_csrf" th:content="${_csrf.token}"/>
+  <link rel="stylesheet" href="css/haonstyle.css">
+  <!--    font awesome   -->
+  <script src="https://kit.fontawesome.com/12cca3ed35.js" crossorigin="anonymous"></script>
+  <!--  tmap 리버스지오코딩이 제이쿼리 의존  -->
+  <script
+          src="//code.jquery.com/jquery-3.2.1.min.js"></script>
+  <script
+          src="https://apis.openapi.sk.com/tmap/jsv2?version=1&appKey=l7xxb35a09b975b44680aa5d193b6e9a3814"></script>
+  <script type="text/javascript" src="js/search.js" defer></script>
+  <script type="text/javascript" src="js/header.js" defer></script>
+  <title>누비라!</title>
+</head>
+
+<body><!-- 맵 생성 실행 -->
+
+<!-- navbar 영역, fragments/header.html을 가져옵니다. -->
+<div th:replace="fragments/header :: nav"> </div>
+<div id="authentication" sec:authorize="isAuthenticated()" sec:authentication="name" style="display: none"></div>
+<div id="main-container">
+  <div class="search-wrap">
+
+    <ul class ="tab-menu">
+      <li id="nearby-staion-btn" class="active"><a>정류소 찾기</a></li>
+      <li id="route-section-btn"><a>길 찾기</a></li>
+    </ul>
+
+    <div class="search-container">
+      <div id="search-place-section" class="">
+        <form action="#" method="get">
+          <input id="search-input" type="search" placeholder="장소, 터미널 검색">
+          <button id="place-search-btn">찾기</button>
+        </form>
+      </div>
+
+      <div id="search-route-section" class="hidden">
+        <form action="#" method="get">
+          <input id="dep-search-input" type="search" value="내 위치" onkeyup="searchEventHandler(event, this)" placeholder="출발지를 검색해주세요">
+          <input id="des-search-input" type="search" onkeyup="searchEventHandler(event, this)" placeholder="도착지를 검색해주세요">
+        </form>
+        <div id="btn-flex">
+          <button id="change-direction-btn">⇅</button>
+        </div>
+        <div id="search-btn-div">
+          <button id="search-route-btn">길찾기</button>
+        </div>
+      </div>
+
+      <div id="result-section">
+        <div class="list-section">
+          <ul>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="map-section">
+      <div id="map_div"></div>
+      <button id="my-location-btn" onClick="Move()">내 위치 보기</button>
+    </div>
+
+  </div>
+
+
+
+</div>
+
+</body>
+</html>

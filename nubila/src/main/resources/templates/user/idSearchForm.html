@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <link rel="stylesheet" href="css/haonstyle.css" th:href="@{/css/haonstyle.css}">
+    <link th:href="@{/css/user.css}" rel="stylesheet">
+
+    <script src="https://kit.fontawesome.com/12cca3ed35.js" crossorigin="anonymous"></script>
+    <script type="text/javascript" th:src="@{/js/header.js}" defer></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script th:src="@{/js/user.js}"></script>
+    <title>NUBILA🎵 아이디 찾기</title>
+</head>
+<body>
+<div th:replace="fragments/header :: nav"></div>
+<div id="main-container">
+    <div th:replace="fragments/mainImage :: mainImage"></div>
+</div>
+<div class="container">
+    <div class="py-5 font-bold">
+        <h4>아이디 찾기</h4>
+    </div>
+    <form th:action method="post" onsubmit="return validation_idSearchForm()">
+        <div class="form-div">
+            <input type="text" id="username" name="username"
+                   class="form-control" placeholder="이름">
+            <span class="name_invalid">이름을 입력해주세요.</span>
+        </div>
+        <div class="form-div">
+            <input type="text" id="email" name="email"
+                   class="form-control" placeholder="이메일">
+            <span class="email_invalid">이메일을 입력해주세요.</span>
+        </div>
+        <div th:if="${param.error}" class="invalid_user">
+            일치하는 계정이 없습니다.
+        </div>
+        <div class="row">
+            <div class="col">
+                <button class="w-100 btn btn-ok btn-lg" type="submit">확인</button>
+            </div>
+        </div>
+    </form>
+</form> <br>
+</div>
+<script>
+    const toggleBtn = document.querySelector(".nav-toggle-btn");
+    const menu = document.querySelector(".nav-menu");
+    toggleBtn.addEventListener('click', ()=>{
+        menu.classList.toggle('active');
+    });
+
+</script>
+</body>
+</html>

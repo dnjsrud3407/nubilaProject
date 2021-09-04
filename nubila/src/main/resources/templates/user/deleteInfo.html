@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta id="_csrf" name="_csrf" th:content="${_csrf.token}"/>
+    <meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <link rel="stylesheet" href="css/haonstyle.css" th:href="@{/css/haonstyle.css}">
+    <link th:href="@{/css/user.css}" rel="stylesheet">
+
+    <script src="https://kit.fontawesome.com/12cca3ed35.js" crossorigin="anonymous"></script>
+    <script type="text/javascript" th:src="@{/js/header.js}" defer></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script th:src="@{/js/myInfo.js}"></script>
+    <title>NUBILA🎵 회원탈퇴</title>
+</head>
+<body>
+<div th:replace="fragments/header :: nav"></div>
+<div id="header-myInfo">
+    <ul class="nav-menu-myInfo">
+        <li><a href="/user/myInfo">내 정보관리</a></li>
+        <li><a class="active-li" href="/user/delete">회원탈퇴</a></li>
+    </ul>
+</div>
+<div class="deleteInfo-container">
+    <div class="py-5 font-bold text-start">
+        <h2>회원탈퇴</h2>
+    </div>
+    <div>
+        <h4>유의사항 및 안내를 반드시 읽고 진행해 주세요</h4>
+        <br>
+        <div class="form-div">
+            <h5>탈퇴한 아이디는 재사용 및 복구 불가</h5>
+            <div>
+                회원탈퇴 진행 시 본인을 포함한 타인 모두 재사용 및 복구가 불가합니다.
+            </div>
+        </div>
+        <hr>
+        <div class="form-div">
+            <h5>탈퇴한 후에도 게시판형 서비스에 등록한 게시글 삭제 불가</h5>
+            <div>
+                회원탈퇴 후에도 문의사항 및 댓글이 삭제되지 않고 그대로 남아 있습니다.
+            </div>
+        </div>
+        <br />
+        <div class="form-div">
+            <input type="checkbox" id="deleteCheck" name="deleteCheck">
+            <label for="deleteCheck"><strong>위 사항을 모두 확인하였으며 동의합니다.</strong></label>
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col">
+            <button class="w-100 btn btn-ok btn-lg" type="button" onclick="validation_deleteInfo()">다음</button>
+        </div>
+        <div class="col">
+            <button class="w-100 btn btn-ok-white btn-lg"
+                    onclick="history.go(-1)" type="button">취소</button>
+        </div>
+    </div>
+
+</div>
+<script>
+    const toggleBtn = document.querySelector(".nav-toggle-btn");
+    const menu = document.querySelector(".nav-menu");
+    toggleBtn.addEventListener('click', ()=>{
+        menu.classList.toggle('active');
+    });
+
+</script>
+</body>
+</html>

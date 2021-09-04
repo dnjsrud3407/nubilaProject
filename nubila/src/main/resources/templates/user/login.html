@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>NUBILA🎵 로그인</title>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <link rel="stylesheet" href="css/haonstyle.css" th:href="@{/css/haonstyle.css}">
+    <link th:href="@{/css/user.css}" rel="stylesheet">
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script th:src="@{/js/user.js}"></script>
+</head>
+<body>
+<div class="login-wrapper">
+<div class="container">
+    <div class="nav-logo-big">
+        <a href="/"><span>🎵</span><span>NUBILA</span></a>
+    </div>
+    <form th:action th:object="${user}" method="post" onsubmit="return validation_login()">
+        <div class="form-div">
+            <input type="text" id="user_login_id" name="user_login_id"
+                   class="form-control" placeholder="아이디">
+            <span class="id_invalid">아이디를 입력해주세요.</span>
+        </div>
+        <div class="form-div">
+            <input type="password" id="password" name="password"
+                   class="form-control" placeholder="비밀번호">
+            <span class="pw_invalid">비밀번호를 입력해주세요.</span>
+        </div>
+        <div th:if="${param.error}" class="invalid_user">
+            아이디 또는 비밀번호가 일치하지 않습니다
+        </div>
+        <div class="row">
+            <div class="col">
+                <button class="w-100 btn btn-ok btn-lg" type="submit">로그인</button>
+            </div>
+        </div>
+        <br>
+        <div class="row element-center">
+            <button class="w-25 btn btn-id btn-block" type="button" onclick="location.href='/user/idSearchForm'">아이디 찾기</button>
+            <button class="w-25 btn btn-pw btn-block" type="button" onclick="location.href='/user/pwSearchForm'"s>비밀번호 찾기</button>
+            <button class="w-25 btn btn-join btn-block" type="button" onclick="location.href='/user/join'"s>회원가입</button>
+        </div>
+    </form>
+</form> <br>
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        body{
+            margin: 0;
+        }
+        a {
+            text-decoration: none;
+            color:black;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        #header {
+        }
+        .nav-menu {
+            min-width: 400px;
+            width: 80%;
+            margin: auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 0 3rem 0 1rem;
+        }
+        .nav-menu li{
+            font-weight: 600;
+        }
+        #main {
+            padding: 0 1rem;
+        }
+        @media screen and (max-width: 768px){
+        {
+        }
+        }
+
+    </style>
+
+    <title>NUBILA🎵</title>
+</head>
+<body>
+<div id="header">
+    <ul class="nav-menu">
+        <li class="nav-logo">
+            <a href="/"><h1>NUBILA🎵</h1></a>
+        </li>
+
+        <li><a href=#>정류소/경로 찾기</a></li>
+        <li><a href="/bookmark">⭐즐겨찾기</a></li>
+        <li><a href=#>문의</a></li>
+        <li><a href=#>공지</a></li>
+        <li><a href=#>로그인</a> | <a href=#>회원가입</a></li>
+    </ul>
+</div>
+<div id="main">
+    <ul>
+        <li><a>즐겨찾는 경로</a></li>
+        <li><a>즐겨찾는 정류소</a></li>
+    </ul>
+    <div id="main-sector"></div>
+</div>
+</body>
+<script>
+    'use strict';
+    document.addEventListener("DOMContentLoaded", () => {
+        const main = document.querySelector("#main-sector");
+        function ajaxGetList(){
+            let xhr = new XMLHttpRequest();
+            xhr.open("GET", `${location.pathname}/station`);
+            xhr.send();
+            xhr.addEventListener("load", function() { // 화살표 함수는 this 바인딩을 하지 않는다.
+                if(this.status === 200) {
+                    let data = JSON.parse(this.response);
+                    for(let key in data.stations[0]) {
+                        let col = data.stations[0][key];
+                        main.innerText += `${key} : ${col}, `;
+                    }
+
+                } else {
+                    console.log("idk what's going on");
+                }
+            })
+        }
+        ajaxGetList();
+    })
+
+</script>
+</html>

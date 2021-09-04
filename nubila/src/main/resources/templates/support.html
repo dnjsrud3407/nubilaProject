@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+  <head>
+	  <meta charset="UTF-8">
+	  <meta id="_csrf" name="_csrf" th:content="${_csrf.token}" />
+	  <meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}" />
+	  <title>SUPPORT</title>
+	  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+	  <link th:href="@{/css/haonstyle.css}" rel="stylesheet" />
+	  <link th:href="@{/css/bootstrap.min.css}"
+			href="../css/bootstrap.min.css" rel="stylesheet" />
+	  <link th:href="@{/css/jmstyle.css}" rel="stylesheet" />
+	  <script type="text/javascript" src="js/header.js" defer></script>
+	  <script src="https://cdn.ckeditor.com/ckeditor5/29.2.0/classic/ckeditor.js"></script>
+  </head>
+  <body>
+  	<div th:replace="fragments/header :: nav"></div>
+	<section id="content-section">
+		<nav id="side-menu-nav">
+		  <ul id="side-menu">
+			<li id="notice">공지사항</li>
+			<li sec:authorize="isAuthenticated()" id="inquery">문의하기</li>
+			<li sec:authorize="isAuthenticated()" id="myinquery">문의내역</li>
+		  </ul>
+		</nav>
+		<div id="container">
+		</div>
+	</section>
+
+    <!-- 공지사항 template -->
+    <script id="table-template" type="text/template">	
+		<h1 id="menu-name"></h1>
+		<table class="table table-bordered">
+		  <thead class="table-success">
+			<tr>
+			  <th scope="col" width="10%">NO.</th>
+			  <th scope="col" width="70%">제목</th>
+			  <th scope="col" width="20%">작성일</th>
+			</tr>
+		  </thead>
+		  <tbody>
+		  </tbody>
+		</table>
+	</script>
+	<script id="table-list-template" type="text/template">
+		<tr>
+		  <td>{id}</td>
+		  <td onclick='{func}({id})' id="title-td">{title}</td>
+		  <td>{createDate}</td>
+		</tr>
+	</script>
+	<!-- 공지 상세보기 -->
+	<script id="noticedetail-template" type="text/template">
+		<h1 id="menu-name">공지사항</h1>
+		<div class="card">
+			<h5 class="card-header">제목: {title}</h5>
+
+			<div class="card-body">
+				<div class="card-text">{content}</div>
+			</div>
+			<div class="card-footer text-muted">{createDate}</div>
+		</div>
+		<button type="button" class="btn btn-success" id="noticelist-btn">목록</button>
+	</script>
+    <!-- 문의사항 입력 template -->
+    <script id="inquery-template" type="text/template">
+	  <h1 id="menu-name">문의하기</h1>
+	  <form>
+		  <div class="mb-3">
+			  <label for="title" class="form-label">제목</label>
+			  <input id="title" class="form-control" type="text" />
+		  </div>
+		  <div class="mb-3">
+			<label for="content" class="form-label">내용</label>
+			<textarea id="content" class="form-control" rows="10"></textarea>
+		  </div>
+	  </form>
+	  <button type="button" id="writeinquerybtn" class="btn btn-success" onclick="writeInquery()">등록</button>
+	</script>
+    <!-- 문의 내역 detail template -->
+    <script id="myinquery-template" type="text/template">
+	  <input id="inquery-id" type="hidden" value="{id}" />
+	  <div class="card">
+		  <div id="inquery-title" class="card-header">제목: {title}</div>
+		  <div id="inquery-info" class="card-body">작성일: {createDate}, 수정일: {modifyDate}</div>
+		  <div class="card-body">
+			  <p id="inquery-content">{content}</p>
+			  <button type="button" id="deleteInquerybtn" class="btn btn-warning" onlick="deleteInquery()">삭제</button>
+		  </div>
+		  <ul id="answers" class="list-group list-group-flush"></ul>
+		  <div class="card-footer">
+			  <div id="writeanswer" class="mb-3">
+				  <h5>답변 등록</h5>
+				  <label for="writeanswerarea" class="form-label">내용</label>
+				<textarea class="form-control" id="writeanswerarea" rows="5"></textarea>
+				<button type="button" id="writeanswerbtn" class="btn btn-success" onclick="registerAnswer()">등록</button>
+			  </div>
+		  </div>
+	  </div>
+	  <button type="button" class="btn btn-outline-dark" id="list-btn">목록</button>
+	</script>
+	<!-- 답변 내역 확인 template -->
+	<script id="answer-template" type="text/template">
+	  <li class="list-group-item{class}">
+		  <input id="answerId" type="hidden" value="{id}" />
+		  <div>{writer} 답변 내용</div>
+		  <div id="answerContent">{content}</div>
+		  <div>{createDate}</div>
+	  </li>
+	</script>
+    <script th:src="@{/js/support.js}"></script>
+  </body>
+</html>

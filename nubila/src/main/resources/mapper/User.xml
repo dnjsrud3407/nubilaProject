@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.nubila.nubila.user.UserMapper">
+    <insert id="save" parameterType="com.nubila.nubila.user.User">
+        INSERT INTO user(
+            user_login_id, username, email, password, create_time, modify_date, role, enabled
+        )
+        VALUES(
+            #{user_login_id}, #{username}, #{email}, #{password}, now(), now(), #{role}, #{enabled}
+        )
+    </insert>
+
+    <select id="findOneUserByLoginId" parameterType="String" resultType="com.nubila.nubila.user.User">
+        SELECT * FROM user WHERE user_login_id = #{user_login_id}
+    </select>
+
+    <select id="findEnabledUser_ByLoginId" parameterType="String" resultType="com.nubila.nubila.user.SecurityUser">
+        SELECT * FROM user WHERE user_login_id = #{user_login_id} and enabled=true
+    </select>
+
+    <select id="findOneUserByEmail" parameterType="String" resultType="com.nubila.nubila.user.User">
+        SELECT * FROM user WHERE email = #{email}
+    </select>
+
+    <select id="findLoginIdByName_Email" parameterType="com.nubila.nubila.user.User" resultType="String">
+        SELECT user_login_id FROM user WHERE username = #{username} and email = #{email} and enabled=true
+    </select>
+
+    <select id="findPwByLoginId_Name_Email" parameterType="com.nubila.nubila.user.User" resultType="String">
+        SELECT password FROM user WHERE user_login_id = #{user_login_id} and username = #{username} and email = #{email} and enabled=true
+    </select>
+
+    <update id="updatePassword" parameterType="com.nubila.nubila.user.User">
+        UPDATE user SET password = #{password} WHERE user_login_id = #{user_login_id}
+    </update>
+
+    <update id="updateEmail" parameterType="com.nubila.nubila.user.User">
+        UPDATE user SET email = #{email} WHERE user_login_id = #{user_login_id}
+    </update>
+    <update id="deleteUser" parameterType="String">
+        UPDATE user SET enabled = false WHERE user_login_id = #{user_login_id}
+    </update>
+
+    <select id="getUser" resultType="com.nubila.nubila.user.SecurityUser">
+        SELECT * FROM user
+    </select>
+</mapper>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta id="_csrf" name="_csrf" th:content="${_csrf.token}"/>
+    <meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <link rel="stylesheet" href="css/haonstyle.css" th:href="@{/css/haonstyle.css}">
+    <link th:href="@{/css/user.css}" rel="stylesheet">
+
+    <script src="https://kit.fontawesome.com/12cca3ed35.js" crossorigin="anonymous"></script>
+    <script type="text/javascript" th:src="@{/js/header.js}" defer></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script th:src="@{/js/myInfo.js}"></script>
+    <title>NUBILA🎵 회원탈퇴</title>
+</head>
+<body>
+<div th:replace="fragments/header :: nav"></div>
+<div id="header-myInfo">
+    <ul class="nav-menu-myInfo">
+        <li><a href="/user/myInfo">내 정보관리</a></li>
+        <li><a class="active-li" href="/user/delete">회원탈퇴</a></li>
+    </ul>
+</div>
+<div class="container mt-5">
+    <div class="py-5 font-bold">
+        <h2>회원탈퇴</h2>
+    </div>
+    <form name="changeForm" method="post">
+        <h5>비밀번호 확인</h5>
+        <div class="form-div">
+            <input type="password" id="confirm_password" name="confirm_password" class="form-control" placeholder="비밀번호">
+            <span class="pw_confirm_invalid">비밀번호가 일치하지 않습니다.</span>
+            <input type="hidden" id="pwCheck">
+        </div>
+        <br>
+        <div class="row">
+            <div class="col">
+                <button class="w-100 btn btn-ok btn-lg" type="button" onclick="password_validate_pwConfirm()">회원탈퇴</button>
+            </div>
+            <div class="col">
+                <button class="w-100 btn btn-ok-white btn-lg"
+                        th:onclick="|location.href='@{/user/myInfo}'|"
+                        onclick="location.href='items.html'" type="button">취소</button>
+            </div>
+        </div>
+    </form>
+</div>
+<script>
+    const toggleBtn = document.querySelector(".nav-toggle-btn");
+    const menu = document.querySelector(".nav-menu");
+    toggleBtn.addEventListener('click', ()=>{
+        menu.classList.toggle('active');
+    });
+
+</script>
+</body>
+</html>
