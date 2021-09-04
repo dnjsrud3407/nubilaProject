@@ -22,7 +22,8 @@ import lombok.Setter;
 //	private Timestamp createDate;
 //	private Timestamp modifyDate;
 //}
-
+@AllArgsConstructor
+@RequiredArgsConstructor
 public class Notice {
 	private Long id;
 	private String title;
@@ -30,6 +31,12 @@ public class Notice {
 	private String status;
 	private Timestamp createDate;
 	private Timestamp modifyDate;
+
+	public Notice(String title, String content, String status) {
+		this.title = title;
+		this.content = content;
+		this.status = status;
+	}
 	
 	public Long getId() {
 		return id;

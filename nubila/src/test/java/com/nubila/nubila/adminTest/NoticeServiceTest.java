@@ -7,20 +7,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.nubila.nubila.notice.Notice;
 import com.nubila.nubila.notice.NoticeServiceImpl;
+import org.springframework.boot.test.context.SpringBootTest;
 
+@SpringBootTest
 public class NoticeServiceTest {
-	
+
 	@Autowired
 	NoticeServiceImpl noticeServiceImpl;
-	
+
 	@Test
 	public void getNotice() {
-		final Notice notice = new Notice("°øÁö", "°øÁö»çÇ×ÀÔ´Ï´Ù", "Normal");
-		
+		final Notice notice = new Notice("ìƒˆ ê³µì§€ì‚¬í•­", "ê³µì§€ì‚¬í•­ì´ë‹¤", "normal");
+
 		System.out.println(notice.getTitle());
 		System.out.println(notice.getContent());
 	}
-	
+
 	@Test
 	public void getNoticeListTest() {
 		List<Notice> noticeList = noticeServiceImpl.getNoticeList();
