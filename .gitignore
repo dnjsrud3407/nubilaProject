@@ -1,5 +1,4 @@
 application.properties
-!gradle/wrapper/gradle-wrapper.jar
 
 ### Windows ###
 # Windows image file caches
@@ -17,6 +16,7 @@ $RECYCLE.BIN/
 
 # Package Files #
 *.jar
+!gradle/wrapper/gradle-wrapper.jar
 *.war
 *.ear
 
