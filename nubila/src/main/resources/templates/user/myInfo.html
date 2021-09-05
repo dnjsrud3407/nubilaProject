@@ -21,8 +21,8 @@
 <div th:replace="fragments/header :: nav"></div>
 <div id="header-myInfo">
     <ul class="nav-menu-myInfo">
-        <li><a class="active-li" href="/user/myInfo">내 정보관리</a></li>
-        <li><a href="/user/delete">회원탈퇴</a></li>
+        <li><a class="active-li" href="/myInfo">내 정보관리</a></li>
+        <li><a href="/myInfo/delete">회원탈퇴</a></li>
     </ul>
 </div>
 <div class="myInfo-container">
@@ -61,48 +61,6 @@
                 </div>
             </div>
         </div>
-        <!--
-
-        <table>
-            <tr>
-                <th>아이디</th>
-                <td th:text="${user.user_login_id}">아이디</td>
-            </tr>
-            <tr>
-                <th>비밀번호</th>
-                <td>
-                    <div>
-                        <button type="button" class="password_change_btn" onclick="password_change()">변경</button>
-                        <div class="password_change_div">
-                            <label for="confirm_password">현재 비밀번호</label>
-                            <input type="password" id="confirm_password" name="confirm_password">
-                            <button type="button" onclick="password_validate()">확인</button>
-                            <button type="button" onclick="password_cancel()">취소</button>
-                            <span class="pw_confirm_invalid">비밀번호가 일치하지 않습니다.</span>
-                        </div>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <th>이름</th>
-                <td th:text="${user.username}">이름</td>
-            </tr>
-            <tr>
-                <th>이메일</th>
-                <td>
-                    <div>
-                        <span th:text="${secureEmail}"></span><button type="button" class="email_change_btn" onclick="email_change()">변경</button>
-                        <div class="email_change_div">
-                            <label for="confirm_email">현재 이메일</label>
-                            <input type="text" id="confirm_email" name="confirm_email" style="width: 55%">
-                            <button type="button" onclick="email_validate()">확인</button>
-                            <button type="button" onclick="email_cancel()">취소</button>
-                            <span class="email_confirm_invalid">이메일이 일치하지 않습니다.</span>
-                        </div>
-                    </div>
-                </td>
-            </tr>
-        </table>-->
     </form>
 </div>
 <script>

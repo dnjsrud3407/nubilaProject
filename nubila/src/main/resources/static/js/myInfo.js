@@ -35,13 +35,13 @@ function password_validate() {
     $('.pw_confirm_invalid').css("display", "none");
 
     $.ajax({
-        url:'/user/pwConfirm',
+        url:'/myInfo/pwConfirm',
         type:'post',
         data:{confirm_password:confirm_password},
         success:function(cnt){
             if(cnt < 1) {
                 changeForm.method = "get";
-                changeForm.action = "/user/myInfoPwChange";
+                changeForm.action = "/myInfo/pwChange";
                 changeForm.submit();
             } else {
                 $('.pw_confirm_invalid').css("display", "block");
@@ -57,13 +57,13 @@ function email_validate() {
     $('.email_confirm_invalid').css("display", "none");
 
     $.ajax({
-        url:'/user/emailConfirm',
+        url:'/myInfo/emailConfirm',
         type:'post',
         data:{confirm_email:confirm_email},
         success:function(cnt){
             if(cnt < 1) {
                 changeForm.method = "get";
-                changeForm.action = "/user/myInfoEmailChange";
+                changeForm.action = "/myInfo/emailChange";
                 changeForm.submit();
             } else {
                 $('.email_confirm_invalid').css("display", "block");
@@ -181,7 +181,7 @@ function validation_deleteInfo() {
         return false;
     }
 
-    location.href = '/user/pwConfirm';
+    location.href = '/myInfo/pwConfirm';
     return true;
 }
 
@@ -193,13 +193,13 @@ function password_validate_pwConfirm() {
     $('.pw_confirm_invalid').css("display", "none");
 
     $.ajax({
-        url:'/user/pwConfirm',
+        url:'/myInfo/pwConfirm',
         type:'post',
         data:{confirm_password:confirm_password},
         success:function(cnt){
             if(cnt < 1) {
                 changeForm.method = "get";
-                changeForm.action = "/user/pwConfirmAndDelete";
+                changeForm.action = "/myInfo/pwConfirmAndDelete";
                 changeForm.submit();
             } else {
                 $('.pw_confirm_invalid').css("display", "inline-block");

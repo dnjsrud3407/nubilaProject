@@ -20,7 +20,7 @@
         <li sec:authorize="isAnonymous()"><a href="/user/login">로그인</a></li>
         <li sec:authorize="isAnonymous()"><a href="/user/join">회원가입</a></li>
         <!--<li style="display: none"><a href="/user/myPage">마이페이지</a></li>-->
-        <li sec:authorize="isAuthenticated()"><a href="/user/myInfo">마이페이지</a></li>
+        <li sec:authorize="isAuthenticated()"><a href="/myInfo">마이페이지</a></li>
         <li sec:authorize="hasRole('ROLE_ADMIN')"><a href="/admin">관리자</a></li>
 <!--        <li><a href="/admin">관리자</a></li>-->
         <li sec:authorize="isAuthenticated()"><form action="/user/logout" method="post"><button type="submit">logout</button></form></li>

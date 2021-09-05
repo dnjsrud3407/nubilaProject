@@ -5,12 +5,8 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.MailSender;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,7 +16,6 @@ import org.springframework.web.servlet.support.RequestContextUtils;
 
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
-import java.nio.charset.Charset;
 import java.util.*;
 
 @Controller
@@ -84,7 +79,6 @@ public class UserController {
         String uri = request.getHeader("Referer");
 
         if (uri != null && !uri.contains("/login") && !uri.contains("/idSearchResult") && !uri.contains("/idSearchForm") && !uri.contains("/pwChangeForm")) {
-            System.out.println("before page : " + uri);
             request.getSession().setAttribute("prevPage",
                     request.getHeader("Referer"));
         }
@@ -109,6 +103,11 @@ public class UserController {
 
     @GetMapping("/idSearchResult")
     public String idSearchResult(HttpServletRequest request, Model model) {
+        String referer = request.getHeader("referer");
+        if(referer == null) {
+            return "redirect:/accessDenied";
+        }
+
         Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
         if (flashMap != null) {
             model.addAttribute("user_login_id", flashMap.get("user_login_id"));
@@ -169,7 +168,12 @@ public class UserController {
     }
 
     @GetMapping("/pwChangeForm")
-    public String pwSearchConfirm(Model model) {
+    public String pwSearchConfirm(HttpServletRequest request, Model model) {
+        String referer = request.getHeader("referer");
+        if(referer == null) {
+            return "redirect:/accessDenied";
+        }
+
         return "user/pwChangeForm";
     }
 
@@ -179,145 +183,13 @@ public class UserController {
         return "redirect:/user/login";
     }
 
-    @GetMapping("/myInfo")
-    public String update(Authentication authentication, Model model) {
-        Object principal = authentication.getPrincipal();
-        if (principal instanceof UserDetails) {
-            String user_login_id = ((UserDetails) principal).getUsername();
-            User user = userService.findOneUserByLoginId(user_login_id).get();
-            user.setUser_login_id(user_login_id);
-
-            //  email 보호
-            String secureEmail = user.getEmail();
-            String[] strings = secureEmail.split("@");
-            String secureId = "";
-
-            for (int i = 0; i < strings[0].length(); i++) {
-                if (i > 3) {
-                    secureId += "*";
-                } else {
-                    secureId += strings[0].charAt(i);
-                }
-            }
-
-            secureEmail = secureId + "@" + strings[1];
-            model.addAttribute("secureEmail", secureEmail);
-            model.addAttribute("user", user);
-        }
-        return "user/myInfo";
-    }
-
-    @PostMapping("/pwConfirm")
-    @ResponseBody
-    public int pwConfirm(Authentication authentication, @RequestParam String confirm_password) {
-        int cnt = 1;
-
-        Object principal = authentication.getPrincipal();
-        if (principal instanceof UserDetails) {
-            String password = ((UserDetails) principal).getPassword();
-            String encodedPassword = passwordEncoder.encode(confirm_password);
-            if (passwordEncoder.matches(confirm_password, password)) {
-                cnt = 0;
-            }
-        }
-        return cnt;
-    }
-
-    @GetMapping("/myInfoPwChange")
-    public String myInfoPwChange(Authentication authentication, RedirectAttributes redirectAttributes) {
-        Object principal = authentication.getPrincipal();
-        if (principal instanceof UserDetails) {
-            String user_login_id = ((UserDetails) principal).getUsername();
-            redirectAttributes.addFlashAttribute("user_login_id", user_login_id);
-        }
-        return "redirect:/user/myInfoPwChangeForm";
-    }
-
-    @GetMapping("/myInfoPwChangeForm")
-    public String myInfoPwChangeForm() {
-        return "user/myInfoPwChangeForm";
-    }
-
-    @PostMapping("/myInfoPwChangeForm")
-    public String myInfoPwChangePro(Authentication authentication, @ModelAttribute User user) {
-        Object principal = authentication.getPrincipal();
-        if (principal instanceof UserDetails) {
-            String user_login_id = ((UserDetails) principal).getUsername();
-            user.setUser_login_id(user_login_id);
-        }
-        userService.updatePassword(user);
-        return "redirect:/user/myInfo";
-    }
-
-    @PostMapping("/emailConfirm")
-    @ResponseBody
-    public int emailConfirm(Authentication authentication, @RequestParam String confirm_email) {
-        int cnt = 1;
-
-        Object principal = authentication.getPrincipal();
-        if (principal instanceof UserDetails) {
-            String user_login_id = ((UserDetails) principal).getUsername();
-            User user = userService.findOneUserByLoginId(user_login_id).get();
-            if(user.getEmail().equals(confirm_email)) {
-                cnt = 0;
-            }
-        }
-        return cnt;
-    }
-
-    @GetMapping("/myInfoEmailChange")
-    public String myInfoEmailChange(Authentication authentication, RedirectAttributes redirectAttributes) {
-        Object principal = authentication.getPrincipal();
-        if (principal instanceof UserDetails) {
-            String user_login_id = ((UserDetails) principal).getUsername();
-            redirectAttributes.addFlashAttribute("user_login_id", user_login_id);
-        }
-        return "redirect:/user/myInfoEmailChangeForm";
-    }
-
-    @GetMapping("/myInfoEmailChangeForm")
-    public String myInfoEmailChangeForm() {
-        return "user/myInfoEmailChangeForm";
-    }
-
-    @PostMapping("/myInfoEmailChangeForm")
-    public String myInfoEmailChangePro(Authentication authentication, @ModelAttribute User user) {
-        Object principal = authentication.getPrincipal();
-        if (principal instanceof UserDetails) {
-            String user_login_id = ((UserDetails) principal).getUsername();
-            user.setUser_login_id(user_login_id);
-        }
-        userService.updateEmail(user);
-        return "redirect:/user/myInfo";
-    }
-
-    @GetMapping("/delete")
-    public String deleteInfo() {
-        return "user/deleteInfo";
-    }
-
-    /**
-     * 회원탈퇴 시 비밀번호 확인
-     * @return
-     */
-    @GetMapping("/pwConfirm")
-    public String pwConfirm() {
-        return "user/pwConfirm";
-    }
-
-    @GetMapping("/pwConfirmAndDelete")
-    public String pwConfirmAndDelete(Authentication authentication) {
-        Object principal = authentication.getPrincipal();
-        if (principal instanceof UserDetails) {
-            String user_login_id = ((UserDetails) principal).getUsername();
-            userService.deleteUser(user_login_id);
-        }
-
-        return "redirect:/user/deleteOk";
-    }
-
     @GetMapping("/deleteOk")
     public String deleteOk(HttpServletRequest request) {
+        String referer = request.getHeader("referer");
+        if(referer == null) {
+            return "redirect:/accessDenied";
+        }
+
         request.getSession().invalidate();
         return "user/deleteOk";
     }
@@ -330,4 +202,5 @@ public class UserController {
         map.put("list", userList);
         return map;
     }
+
 }
