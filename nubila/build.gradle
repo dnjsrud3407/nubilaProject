@@ -31,7 +31,6 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-cache")
 	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 	implementation 'it.ozimov:embedded-redis:0.7.2'
-	implementation group:'com.github.ulisesbocchio', name:'jasypt-spring-boot-starter', version:'3.0.3'
 	compileOnly 'org.projectlombok:lombok'
 	compileOnly('org.springframework.boot:spring-boot-starter-thymeleaf')
 	runtimeOnly('org.springframework.boot:spring-boot-devtools')
