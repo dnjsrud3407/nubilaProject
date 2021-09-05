@@ -35,17 +35,23 @@
 
     <div class="search-container">
       <div id="search-place-section" class="">
-        <form action="#" method="get">
+        <form>
           <input id="search-input" type="search" placeholder="장소, 터미널 검색">
           <button id="place-search-btn">찾기</button>
         </form>
       </div>
 
       <div id="search-route-section" class="hidden">
-        <form action="#" method="get">
-          <input id="dep-search-input" type="search" value="내 위치" onkeyup="searchEventHandler(event, this)" placeholder="출발지를 검색해주세요">
-          <input id="des-search-input" type="search" onkeyup="searchEventHandler(event, this)" placeholder="도착지를 검색해주세요">
-        </form>
+        <div id="search-input-group">
+          <form class="search-box">
+            <input id="dep-search-input" type="search" value="내 위치" placeholder="출발지를 검색해주세요">
+            <button id="dep-search-btn">🔍</button>
+          </form>
+          <form class="search-box">
+            <input id="des-search-input" type="search" placeholder="도착지를 검색해주세요">
+            <button id="des-search-btn">🔍</button>
+          </form>
+        </div>
         <div id="btn-flex">
           <button id="change-direction-btn">⇅</button>
         </div>
@@ -70,9 +76,6 @@
 
   </div>
 
-
-
 </div>
-
 </body>
 </html>

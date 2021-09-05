@@ -34,7 +34,6 @@ public class BookmarkController {
     public Map<String, Object> stationBookmarkList(Authentication authentication,
                                                    @RequestParam(name="start", required = false, defaultValue = "0") int start) {
         Map<String, Object> map = new HashMap<>();
-        //TODO authentication이 null인 경우를 고려해야 하는가?
         SecurityUser customUserDetails = (SecurityUser)authentication.getPrincipal();
         Long userId = customUserDetails.getId();
 
@@ -46,7 +45,8 @@ public class BookmarkController {
     @PostMapping("station")
     @ResponseBody
     public Map<String, Object> addBookmarkStation(Authentication authentication,
-                                                 @RequestBody BookmarkStationDto bookmarkStationDto) {
+                                                  @RequestBody BookmarkStationDto bookmarkStationDto) {
+
         Map<String, Object> map = new HashMap<>();
         SecurityUser customUserDetails = (SecurityUser)authentication.getPrincipal();
         long userId = customUserDetails.getId();
@@ -79,9 +79,10 @@ public class BookmarkController {
     @ResponseBody
     public Map<String, Object> routeBookmarkList(Authentication authentication,
                                                  @RequestParam(name="start", required = false, defaultValue = "0") int start) {
-        SecurityUser customUserDetails = (SecurityUser)authentication.getPrincipal();
-        long userId = customUserDetails.getId();
+
         Map<String, Object> map = new HashMap<>();
+        SecurityUser customUserDetails = (SecurityUser) authentication.getPrincipal();
+        long userId = customUserDetails.getId();
         List<BookmarkRouteDto> list = bookmarkService.getBookmarkRouteAll(start, userId);
         map.put("routes", list);
 
@@ -91,7 +92,7 @@ public class BookmarkController {
     @PutMapping("route")
     @ResponseBody
     public Map<String, Object> editBookmarkRoute(Authentication authentication,
-                                                   @RequestBody Map<String, Object> reqMap) {
+                                                 @RequestBody Map<String, Object> reqMap) {
 
         Map<String, Object> map = new HashMap<>();
         SecurityUser customUserDetails = (SecurityUser) authentication.getPrincipal();

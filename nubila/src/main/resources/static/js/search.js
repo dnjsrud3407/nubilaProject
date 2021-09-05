@@ -1,9 +1,15 @@
 const token = document.querySelector("meta[name='_csrf']").content;
 let tabMenu = document.querySelector("ul.tab-menu");
 let listSection = document.querySelector(".list-section>ul");
-let latlon = [35.2538433, 128.6402609];
+let latlon = [35.22794668, 128.68185049]; // 창원시청 default
 let isAuthentication = document.querySelector("#authentication");
 let map;
+
+// 마커
+let selectedMarkerIndex;
+let selectedPlaceMarker;
+let markerArray = [];
+
 
 async function getCurrentLatLon() {
     return new Promise(function(resolve, reject) {
@@ -11,6 +17,13 @@ async function getCurrentLatLon() {
             position => { resolve([position.coords.latitude, position.coords.longitude]) },
             error => { reject(error) });
     });
+}
+
+//지도에서 내 위치로 이동
+async function Move(){
+    //TODO 추후 위치 이동하면서 체크해야 함
+    //if (isLocationAccessed) { latlon = await getCurrentLatLon()}
+    map.setCenter(new Tmapv2.LatLng(latlon[0], latlon[1])); // 지도의 중심 좌표를 설정합니다.
 }
 function initTmap(){
     // map 생성
@@ -28,11 +41,6 @@ function initTmap(){
         map: map,
         title: "내 위치"
     });
-}
-//처음 위치로 이동하는 함수
-function Move(){
-    let myLatLon = new Tmapv2.LatLng(latlon[0], latlon[1]);
-    map.setCenter(myLatLon); // 지도의 중심 좌표를 설정합니다.
 }
 //좌표의 주소를 얻기 위한 리버스 지오코딩 요청 함수
 function loadGetLonLatFromAddress() {
@@ -55,7 +63,7 @@ function onComplete() {
 function onProgress() {}
 //데이터 로드 중 에러가 발생시 실행하는 함수
 function onError(){
-    alert("onError");
+    console.log("리버스 지오 코딩 에러");
 }
 
 function fetchData(url = '', method ='' ,data = {}, csrfToken=true) {
@@ -92,12 +100,15 @@ async function searchPlace(el) {
     let data = {
         "appKey" : "l7xxb35a09b975b44680aa5d193b6e9a3814",
         "searchKeyword" : searchKeyword,
+        "searchType" : "name",
+        "areaLLCode" : "48",
+        "areaLMCode": "120",
         "resCoordType" : "WGS84GEO",
         "reqCoordType" : "WGS84GEO",
-        "centerLon" :  latlon[1],
-        "centerLat" :  latlon[0],
         "searchtypCd" : "A", // 정확도 순
-        "radius" : 30, // 탐색 반경
+        // "centerLon" :  latlon[1],
+        // "centerLat" :  latlon[0],
+        //"radius" : 33, // 탐색 반경
         "poiGroupYn" : "Y",
         "count" : 10
     }
@@ -120,11 +131,6 @@ function haversine(latlon1, latlon2) {
     let distance = 2 * EARTH_RADIUS * Math.asin(squareRoot);
     return distance;
 }
-// 마커
-let selectedMarkerIndex;
-let selectedPlaceMarker;
-let markerArray = [];
-
 
 async function getNearbyTermianl(pos, title="내 위치") {
     if (markerArray.length>0) markerArray.forEach(m => m.setMap(null));
@@ -137,18 +143,17 @@ async function getNearbyTermianl(pos, title="내 위치") {
         });
     }
     // 누비자 데이터 불러오기
-    let nubijaResponse = await fetch('/nubija'); //.then(res => res.json());
+    let nubijaResponse = await fetch('/nubija');
     let nubijaJson = await nubijaResponse.json();
     let terminalInfoList = nubijaJson.TerminalInfo;
 
-    // 거리계산 후 정렬 (가까운 거리 최대 n개 터미널까지)
+    // 거리계산 후 정렬 (가까운 거리 최대 5개 터미널까지)
     terminalInfoList.forEach( item => {
-        // 배열 내 객체에 계산된 거리 속성 추가
         item.dist = haversine(pos, [Number(item.Latitude), Number(item.Longitude)]);
-    })
+    });
+    let sortedTerminalInfoList5 = terminalInfoList.sort((a, b) => a.dist - b.dist).slice(0,5);
 
     let latlonBounds = new Tmapv2.LatLngBounds();
-    let sortedTerminalInfoList5 = terminalInfoList.sort((a, b) => a.dist - b.dist).slice(0,5);
     markerArray = sortedTerminalInfoList5.map((item, index) => {
 
         let position = new Tmapv2.LatLng(item.Latitude, item.Longitude);
@@ -164,6 +169,7 @@ async function getNearbyTermianl(pos, title="내 위치") {
         return marker;
     })
     map.fitBounds(latlonBounds);
+    if (map.getZoom()> 16) map.setZoom(16);
 
     markerArray.forEach( (marker, index) => {
         marker.addListener("click", function() {
@@ -177,6 +183,7 @@ async function getNearbyTermianl(pos, title="내 위치") {
         })
     })
 
+    // 터미널 목록 리스트 생성하기
     // 회원별 북마크한 정거장 정보 가져오기
     let bookmarkStationIds;
     if (isAuthentication!== null) {
@@ -187,6 +194,7 @@ async function getNearbyTermianl(pos, title="내 위치") {
                 return item.stationId
             })
     }
+
     let listSection = document.querySelector(".list-section>ul");
     listSection.innerHTML = "";
     sortedTerminalInfoList5.forEach(item => {
@@ -230,12 +238,13 @@ async function searchEventHandler(evt, el) {
     if (evt.key !== 'Enter' && evt.target.tagName !== "BUTTON") return;
 
     let result = await searchPlace(el);
-
+    console.log(result);
     let listSection = document.querySelector(".list-section>ul");
     listSection.innerHTML = '';
 
     markerArray.forEach(item => item.setMap(null))
-    let latlonBounds = new Tmapv2.LatLngBounds();
+    let latlonBounds = new Tmapv2.LatLngBounds(); // 범위 지정
+
     result.slice(0, 5)
         .forEach( (item, index) => {
             let position = new Tmapv2.LatLng(item.noorLat, item.noorLon);
@@ -270,6 +279,7 @@ async function searchEventHandler(evt, el) {
                     </li>`;
         })
     map.fitBounds(latlonBounds);
+    if (map.getZoom()> 16) map.setZoom(16);
 }
 
 let departure;
@@ -285,14 +295,9 @@ function searchRouteClickHandler(item) {
     searchContainer.querySelector("#search-place-section").classList.add("hidden");
     searchContainer.querySelector("#search-route-section").classList.remove("hidden");
     let listItem = item.closest(".list-item");
+    listItem.classList.add("selected")
 
-    // let itemIndex = listItem.classList[1];
-    // listItem.parentElement.childNodes.forEach( (el, index) => {
-    //     //if (String(index) !== itemIndex)
-    //     {
-    //         el.remove();}
-    // })
-    listItem.querySelector(".btn-group").remove();
+    listSection.querySelectorAll(".btn-group").forEach(el => el.remove());
 
     if (item.textContent==="출발") {
         let depInput = searchContainer.querySelector("#dep-search-input");
@@ -361,7 +366,7 @@ function cleanMap() {
 }
 let sortedDepTerminalInfo3;
 let sortedDesTerminalInfo3;
-let routeResult;
+let routeResult =[];
 function drawRoute(index, sortedDepTerminalInfo3, sortedDesTerminalInfo3, routeResult) {
     cleanMap();
     let drawInfoArr = [];
@@ -394,13 +399,19 @@ function drawRoute(index, sortedDepTerminalInfo3, sortedDesTerminalInfo3, routeR
         map : map
     })
 }
-
+function removeEl(btn) {
+    let div = btn.closest("div");
+    div.remove();
+}
+function divAlert(message) {
+    let div = `<div class="alert"><span>${message}</span><button title="삭제하기" onclick="removeEl(this)">x</button></div>`
+    document.querySelector(".search-wrap").insertAdjacentHTML('afterbegin', div);
+}
 async function base() {
     try {
         latlon = await getCurrentLatLon();
     } catch (e) {
-        alert("setting default location.");
-        latlon = [35.2538433, 128.6402609];
+        divAlert("위치 액세스가 거부되어 기본 위치(창원시청)로 내 위치가 지정됩니다. 내 위치를 확인하려면 위치 액세스를 허용해주세요.");
     }
     initTmap();
 
@@ -416,7 +427,12 @@ async function base() {
 
     //장소 검색
     let searchBtn = document.querySelector("#place-search-btn");
-    searchBtn.addEventListener("click", evt => searchEventHandler(evt, evt.target))
+    searchBtn.addEventListener("click", evt => searchEventHandler(evt, evt.target));
+
+    let depSearchBtn = document.querySelector("#dep-search-btn");
+    depSearchBtn.addEventListener("click", evt => searchEventHandler(evt, evt.target));
+    let desSearchBtn = document.querySelector("#des-search-btn");
+    desSearchBtn.addEventListener("click", evt => searchEventHandler(evt, evt.target));
 
     //길 찾기
     let searchRouteBtn = document.querySelector("#search-route-btn");
@@ -439,7 +455,6 @@ async function base() {
             sortedDesTerminalInfo3 = terminalInfoList.sort((a, b) => a.desDist - b.desDist).slice(0, 3);
             console.log(sortedDepTerminalInfo3, sortedDesTerminalInfo3);
 
-            let searchRouteResult = [];
             for (let i = 0; i < 2; i++) {
                 for (let j = 0; j < 2; j++) {
                     let passList =
@@ -470,19 +485,14 @@ async function base() {
                             depIndex: i,
                             desIndex: j
                         };
+                        routeResult.push(temp);
                     } catch (e) {
                         console.log(`response error: ${e}`);
-                    } finally {
-                        searchRouteResult.push(temp);
                     }
-                    await sleep(500);
+                    await sleep(500); // 티맵 api 무료 이용시 1분에 2회 요청 제한
                 }
             }
 
-            routeResult = searchRouteResult
-                .filter(el => el);
-                //.sort((a, b) => a.route[0].properties.totalDistance - b.route[0].properties.totalDistance)
-                //.slice(0, 3);
             console.log(routeResult);
 
             // 리스트 작성하기
@@ -520,26 +530,24 @@ async function base() {
                             {bookmark-star}
                         </div>
                     </li>`
-
+                let star = "";
                 if (isAuthentication!== null) {
                     if (false) { //TODO 조건절 완성
-                        let star = `<div id="bookmark-star" class="active">
-                            <i class="fas fa-star"></i>
-                        </div>`;
+                        star = `<div id="bookmark-star" class="active">
+                                <i class="fas fa-star"></i>
+                            </div>`;
                     }
                     else {
-                        let star = `<div id="bookmark-star" class>
+                        star = `<div id="bookmark-star" class>
                             <i class="fas fa-star"></i>
                         </div>`;
                     }
-                    template = template.replace("{bookmark-star}", star);
-                } else {
-                    template = template.replace("{bookmark-star}", "");
                 }
+                template = template.replace("{bookmark-star}", star);
                 listSection.innerHTML += template;
             });
 
-           // 맵에 첫번째 경로 그리기
+            // 맵에 첫번째 경로 그리기
             drawRoute(0, sortedDepTerminalInfo3, sortedDesTerminalInfo3, routeResult);
 
         }
