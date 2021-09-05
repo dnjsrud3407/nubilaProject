@@ -38,7 +38,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     .antMatchers(urlPermitAll())
                         .permitAll()
                     // 2. 특정 권한에게 Open되는 곳
-                    .antMatchers("/admin").hasRole("ADMIN")
+                    .antMatchers("/admin/**").hasRole("ADMIN")
                     // 3. 그 밖의 페이지는 모두 로그인 필요
                     .anyRequest()
                         .authenticated()
