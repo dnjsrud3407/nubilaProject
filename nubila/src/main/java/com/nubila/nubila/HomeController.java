@@ -21,4 +21,6 @@ public class HomeController {
         return "nubila";
     }
 
+    @GetMapping("/accessDenied")
+    public String accessDenied() {return "accessDenied";}
 }
