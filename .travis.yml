@@ -13,7 +13,7 @@ cache:
     - '$HOME/.gradle'
 
 before_install:
-  - chmod +x gradlew
+  - chmod +x nubila/gradlew
 
 script: "./nubila/gradlew clean build"
 
