@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class AnswerController {
 	@Autowired
-	AnswerServiceImpl answerServiceImpl;
+	private AnswerServiceImpl answerServiceImpl;
 	
 	@GetMapping("/answer")
 	public Map<String, Object> getList(){

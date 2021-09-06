@@ -21,10 +21,10 @@ import com.nubila.nubila.user.UserService;
 @Controller
 public class InqueryController {
 	@Autowired
-	InqueryServiceImpl inqueryServiceImpl;
+	private InqueryServiceImpl inqueryServiceImpl;
 	
 	@Autowired
-	UserService userService;
+	private UserService userService;
 	
 	@GetMapping("/support")
 	public String getView() {
