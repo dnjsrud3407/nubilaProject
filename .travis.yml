@@ -37,19 +37,19 @@ deploy:
       repo: dnjsrud3407/nubilaProject #Github 주소
       branch: main
       
-- provider: codedeploy
-  access_key_id: $AWS_ACCESS_KEY # Travis repo settings에 설정된 값
-  secret_access_key: $AWS_SECRET_KEY # Travis repo settings에 설정된 값
-  bucket: nubilaproject # S3 버킷
-  key: nubilaProject.zip # S3 버킷에 저장된 jaewon-study.zip 파일을 EC2로 배포
-  bundle_type: zip
-  application: nubilaProject # 웹 콘솔에서 등록한 CodeDeploy 어플리케이션
-  deployment_group: nubilaProject-group # 웹 콘솔에서 등록한 CodeDeploy 배포 그룹
-  region: ap-northeast-2
-  wait-until-deployed: true
-  on:
-    repo: dnjsrud3407/nubilaProject
-    branch: main
+  - provider: codedeploy
+    access_key_id: $AWS_ACCESS_KEY # Travis repo settings에 설정된 값
+    secret_access_key: $AWS_SECRET_KEY # Travis repo settings에 설정된 값
+    bucket: nubilaproject # S3 버킷
+    key: nubilaProject.zip # S3 버킷에 저장된 jaewon-study.zip 파일을 EC2로 배포
+    bundle_type: zip
+    application: nubilaProject # 웹 콘솔에서 등록한 CodeDeploy 어플리케이션
+    deployment_group: nubilaProject-group # 웹 콘솔에서 등록한 CodeDeploy 배포 그룹
+    region: ap-northeast-2
+    wait-until-deployed: true
+    on:
+      repo: dnjsrud3407/nubilaProject
+      branch: main
 
 # CI 실행 완료 시 메일로 알람
 notifications:
