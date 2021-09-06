@@ -36,3 +36,13 @@ notifications:
   email:
     recipients:
       - teamhjw@gmail.com
+
+before_deploy:
+  - zip -r springboot-webservice *
+  - mkdir -p deploy
+  - mv nubilaProject.zip deploy/nubilaProject.zip
+
+deploy:
+  - provider: s3
+    ...
+    local_dir: deploy 
