@@ -1,4 +1,4 @@
--language: java
+language: java
 jdk:
   - openjdk11
 
@@ -18,6 +18,11 @@ before_install:
 
 script: "./gradlew clean build"
 
+before_deploy:
+  - zip -r springboot-webservice *
+  - mkdir -p deploy
+  - mv nubilaProject.zip deploy/nubilaProject.zip
+
 deploy:
   - provider: s3
     access_key_id: $AWS_ACCESS_KEY # Travis repo settings에 설정된 값
@@ -26,6 +31,7 @@ deploy:
     region: ap-northeast-2
     skip_cleanup: true
     acl: public_read
+    local_dir: deploy 
     wait-until-deployed: true
     on:
       repo: dnjsrud3407/nubilaProject #Github 주소
@@ -37,12 +43,3 @@ notifications:
     recipients:
       - teamhjw@gmail.com
 
-before_deploy:
-  - zip -r springboot-webservice *
-  - mkdir -p deploy
-  - mv nubilaProject.zip deploy/nubilaProject.zip
-
-deploy:
-  - provider: s3
-    ...
-    local_dir: deploy 
