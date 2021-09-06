@@ -9,8 +9,8 @@ branches:
 # Travis CI 서버의 Home
 cache:
   directories:
-    - '$HOME/nubila/.m2/repository'
-    - '$HOME/nubila/.gradle'
+    - '$HOME/nubilaProject/nubila/.m2/repository'
+    - '$HOME/nubilaProject/nubila/.gradle'
 
 before_install:
   - chmod +x gradlew
