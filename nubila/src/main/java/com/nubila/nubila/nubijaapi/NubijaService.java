@@ -41,10 +41,9 @@ public class NubijaService {
 
     @Cacheable(value="NUBIJA", unless = "#result == null", cacheManager = "cacheManager")
     public NubijaResponse getNubijaResponse() {
-        //TODO 1d*24h*60min > 1000회이므로 키를 번갈아 이용하도록 수정 필요
-        String randKey = apikey.getNubijaApiH();
-
         log.info("===== 캐싱된 데이터 없음, NUBIJA 데이터 새로 요청 =====");
+        String randKey = apikey.getRandNubijaApiKey();
+
         return webClient.get().uri(uriBuilder -> uriBuilder
                                 .queryParam("apikey", randKey)
                                 .build())
