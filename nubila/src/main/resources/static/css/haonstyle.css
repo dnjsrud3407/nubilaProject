@@ -178,7 +178,7 @@ input[type="search"]:focus {
     margin:auto;
     padding: 0 1.5rem;
 }
-#bookmark-container ul, .list-section ul{
+#bookmark-container ul, #result-list-section ul{
     margin: .4em .5em;
 }
 .tab-menu {
@@ -204,7 +204,7 @@ input[type="search"]:focus {
 #bookmark-route {
     flex: 1;
 }
-#bookmark-station li, #bookmark-route li, .list-section li {
+#bookmark-station li, #bookmark-route li, #result-list-section li {
     cursor: pointer;
     border: #d3d3d3 1px solid;
     border-radius: 8px;
@@ -275,10 +275,10 @@ ul#search-btn-group {
 #my-location-btn {
     float:right;
 }
-.list-section {
+#result-list-section {
     white-space: nowrap;
 }
-.list-section .selected {
+#result-list-section .selected {
     background-color: #fff3e2;
 }
 #search-place-section, #search-route-section {
