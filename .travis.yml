@@ -19,7 +19,7 @@ before_install:
 script: "./gradlew clean build"
 
 before_deploy:
-  - zip -r springboot-webservice *
+  - zip -r nubilaProject *
   - mkdir -p deploy
   - mv nubilaProject.zip deploy/nubilaProject.zip
 
