@@ -1,5 +1,7 @@
+
+const contextPath = $('#contextPathHolder').attr('data-contextPath') ? $('#contextPathHolder').attr('data-contextPath') : '';
 // DOMLOAD 시, 공지 사항 리스트 불러오기
-document.addEventListener("DOMContentLoaded", ajaxGet("http://localhost:8900/notice", getNotices));
+document.addEventListener("DOMContentLoaded", ajaxGet(contextPath+"/notice", getNotices));
 
 const token = $("meta[name='_csrf']").attr("content");
 const header = $("meta[name='_csrf_header']").attr("content");
@@ -21,13 +23,13 @@ ul.addEventListener("click", function(evt){
 		select(ul, evt.target);
 		switch(evt.target.id){
 			case 'notice':
-				ajaxGet("http://localhost:8900/notice", getNotices);
+				ajaxGet(contextPath+"/notice", getNotices);
 				break;
 			case 'inquery':
 				registerInquery();
 				break;
 			case 'myinquery':
-				ajaxGet("http://localhost:8900/myinquery", getInqueries);
+				ajaxGet(contextPath+"/myinquery", getInqueries);
 				break;
 		}
 	}
@@ -86,11 +88,11 @@ function setNoticeDetail(data){
 	.replace("{createDate}", el.createDate.slice(0, 10));
 
 	let listBtn = document.getElementById("noticelist-btn");
-	listBtn.addEventListener("click", () => { ajaxGet("http://localhost:8900/notice", getNotices)} );
+	listBtn.addEventListener("click", () => { ajaxGet(contextPath+"/notice", getNotices)} );
 }
 
 function getNoticeDetail(data){
-	let url = "http://localhost:8900/noticedetail/" + data;
+	let url = contextPath+"/noticedetail/" + data;
 	ajaxGet(url, setNoticeDetail);
 }
 
@@ -117,7 +119,7 @@ function writeInquery(){
 		status: "normal"
 	})
 	// console.log(data);
-	ajaxPost("http://localhost:8900/inquery", data);
+	ajaxPost(contextPath+"/inquery", data);
 	document.getElementById('title').value = "";
 	document.getElementById('content').value = "";
 }
@@ -174,8 +176,8 @@ function registerAnswer(){
 		content: document.getElementById('writeanswerarea').value,
 		status:'normal'
 	});
-	ajaxPost("http://localhost:8900/answer", data);
-	ajaxGet("http://localhost:8900/answer/"+inqueryId, getAnswersById);
+	ajaxPost(contextPath+"/answer", data);
+	ajaxGet(contextPath+"/answer/"+inqueryId, getAnswersById);
 	document.getElementById('writeanswerarea').value = "";
 }
 
@@ -185,9 +187,9 @@ function deleteAnswer(){
 		content: document.getElementById("answerContent").innerText,
 		status: 'deleted'
 	})
-	ajaxPost("http://localhost:8900/answer", data);
+	ajaxPost(contextPath+"/answer", data);
 	let inqueryId = document.getElementById("inquery-id").value;
-	ajaxGet("http://localhost:8900/answer/"+inqueryId, getAnswersById);
+	ajaxGet(contextPath+"/answer/"+inqueryId, getAnswersById);
 }
 
 function setInqueryDetail(data){
@@ -197,14 +199,14 @@ function setInqueryDetail(data){
 	container.innerHTML = template.replace("{id}", el.id).replace("{title}", el.title)
 	.replace("{createDate}", el.createDate.slice(0, 10)).replace("{modifyDate}", el.modifyDate.slice(0, 10)).replace("{content}", el.content);
 	
-	ajaxGet("http://localhost:8900/answer/"+el.id, getAnswersById);
+	ajaxGet(contextPath+"/answer/"+el.id, getAnswersById);
 
 	let listBtn = document.getElementById("list-btn");
-	listBtn.addEventListener("click", () => { ajaxGet("http://localhost:8900/myinquery", getInqueries)} );
+	listBtn.addEventListener("click", () => { ajaxGet(contextPath+"/myinquery", getInqueries)} );
 }
 
 function getInqueryDetail(id){
-	let url = "http://localhost:8900/inquerydetail/" + id;
+	let url = contextPath+"/inquerydetail/" + id;
 	ajaxGet(url, setInqueryDetail);
 }
 
@@ -215,5 +217,5 @@ function deleteInquery(){
 		content: document.getElementById('inquery-content').innerText,
 		status: "deleted"
 	})
-	ajaxPost("http://localhost:8900/inquery", data);
+	ajaxPost(contextPath+"/inquery", data);
 }

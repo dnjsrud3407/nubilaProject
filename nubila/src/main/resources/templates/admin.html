@@ -12,6 +12,7 @@
 	  <script type="text/javascript" src="js/header.js" defer></script>
 	  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 	  <script src="https://cdn.ckeditor.com/ckeditor5/29.2.0/classic/ckeditor.js"></script>
+	  <link id="contextPathHolder" th:data-contextPath="${#httpServletRequest.getContextPath()}"/>
   </head>
   <body>
   	<div th:replace="fragments/header :: nav"></div>

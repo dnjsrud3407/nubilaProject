@@ -1,3 +1,4 @@
+const contextPath = $('#contextPathHolder').attr('data-contextPath') ? $('#contextPathHolder').attr('data-contextPath') : '';
 // 메뉴 버튼 클릭 이벤트 등록
 function select(ul, li){
 	Array.from(ul.children).forEach(v =>
@@ -15,13 +16,13 @@ ul.addEventListener("click", function(evt){
 		console.log(evt.target.id);
 		switch(evt.target.id){
 			case 'notice':
-				ajaxGet("http://localhost:8900/notice", getNotices);
+				ajaxGet(contextPath+"/notice", getNotices);
 				break;
 			case 'inquery':
-				ajaxGet("http://localhost:8900/inquery", getInqueries);
+				ajaxGet(contextPath+"/inquery", getInqueries);
 				break;
 			case 'user':
-				ajaxGet("http://localhost:8900/user/list", getUsers);
+				ajaxGet(contextPath+"/userlist", getUsers);
 				break;
 		}
 	}
@@ -113,7 +114,7 @@ function setNoticeDetail(data){
 }
 
 function getNoticeDetail(data){
-	let url = "http://localhost:8900/noticedetail/" + data;
+	let url = contextPath+"/noticedetail/" + data;
 	ajaxGet(url, setNoticeDetail);
 }
 // 공지 입력
@@ -167,7 +168,7 @@ function registerNotice(){
 		content: document.getElementById('content').value,
 		status: document.getElementById('status').value
 	})
-	ajaxPost("http://localhost:8900/notice", data);
+	ajaxPost(contextPath+"/notice", data);
 }
 
 // 공지 수정
@@ -178,7 +179,7 @@ function updateContent(){
 		content: document.getElementById('content').value,
 		status: document.getElementById('status').value
 	})
-	ajaxPost("http://localhost:8900/notice", data);
+	ajaxPost(contextPath+"/notice", data);
 }
 
 
@@ -190,7 +191,7 @@ function deleteContent(menu){
 		content: document.getElementById('content').value,
 		status: "deleted"
 	})
-	ajaxPost("http://localhost:8900/"+menu, data);
+	ajaxPost(contextPath+"/"+menu, data);
 }
 // 문의사항 목록
 function getInqueries(data) {
@@ -235,7 +236,7 @@ function setInqueryDetail(data){
     
     document.getElementById("updatebtn").remove();
     //답변 history 불러오기
-    ajaxGet("http://localhost:8900/answer/" + el.id, getAnswers);
+    ajaxGet(contextPath+"/answer/" + el.id, getAnswers);
     modalContent.insertAdjacentHTML("beforeend", "<textarea id='answer'></textarea>");
 	modalContent.insertAdjacentHTML("beforeend", "<button type='button' class='btn btn-success btn-sm' id='answerbtn' onclick='registerAnswer()'>답변 등록</button>");
     
@@ -257,7 +258,7 @@ function getAnswers(data){
 }
 
 function getInqueryDetail(data){
-	let url = "http://localhost:8900/inquerydetail/" + data;
+	let url = contextPath+"/inquerydetail/" + data;
 	ajaxGet(url, setInqueryDetail);
 }
 // 문의사항 답변 등록
@@ -268,7 +269,7 @@ function registerAnswer(){
 		writer: "ADMIN",
 		status: 'normal'
 	})
-	ajaxPost("http://localhost:8900/answer", data);
+	ajaxPost(contextPath+"/answer", data);
 	document.getElementById('answer').value=""
 }
 // 문의사항 답변 수정
@@ -277,8 +278,8 @@ function answerUpdate(aid){
 	id: aid,
 	content: document.getElementById('answer').value
 	})
-	ajaxPost("http://localhost:8900/answer", data);
-	ajaxGet("http://localhost:8900/answer/" + el.id, getAnswers);
+	ajaxPost(contextPath+"/answer", data);
+	ajaxGet(contextPath+"/answer/" + el.id, getAnswers);
 }
 
 // 문의사항 답변 삭제
@@ -286,8 +287,8 @@ function deleteAnswer(){
 	let data = JSON.stringify({
 
 	})
-	ajaxPost("http://localhost:8900/answer", data);
-	ajaxGet("http://localhost:8900/answer/" + el.id, getAnswers);
+	ajaxPost(contextPath+"/answer", data);
+	ajaxGet(contextPath+"/answer/" + el.id, getAnswers);
 }
 
 // 회원 목록 불러오기
