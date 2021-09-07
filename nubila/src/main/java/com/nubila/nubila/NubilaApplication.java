@@ -2,6 +2,7 @@ package com.nubila.nubila;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
 
 
 // 메인 Configuration 위치에서 하위 패키지는 디폴트로 스캔하므로
@@ -12,8 +13,14 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class NubilaApplication {
 
+	public static final String APPLICATION_LOCATIONS = "spring.config.location="
+			+ "classpath:application.yml,"
+			+ "/app/config/springboot-webservice/real-application.yml";
+
 	public static void main(String[] args) {
-		SpringApplication.run(NubilaApplication.class, args);
+		new SpringApplicationBuilder(NubilaApplication.class)
+				.properties(APPLICATION_LOCATIONS)
+				.run(args);
 	}
 
 }
