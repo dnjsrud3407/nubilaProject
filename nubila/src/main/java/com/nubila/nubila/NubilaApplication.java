@@ -15,7 +15,7 @@ public class NubilaApplication {
 
 	public static final String APPLICATION_LOCATIONS = "spring.config.location="
 			+ "classpath:application.properties,"
-			+ "/app/config/springboot-webservice/real-application.yml";
+			+ "~/app/config/springboot-webservice/real-application.yml";
 
 	public static void main(String[] args) {
 		new SpringApplicationBuilder(NubilaApplication.class)
