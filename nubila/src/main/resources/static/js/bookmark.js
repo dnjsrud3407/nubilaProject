@@ -6,6 +6,7 @@ const tabMenu = document.querySelector(".tab-menu");
 // 템플릿
 const templatingHtml = {
     stationList : function (Element, terminalInfo) {
+        console.log(terminalInfo);
         Element.innerHTML +=
             `<li class="list-item" id="${terminalInfo.Vno}">
                 <div>
@@ -19,7 +20,7 @@ const templatingHtml = {
                 </div>
                 <div class="btn-group">
                     <ul id="search-btn-group">
-                            <li><a href="#">경유</a></li>
+                            <li><a href="#">출발</a></li>
                             <li><a href="#">도착</a></li>
                     </ul>
                     <div id="bookmark-star" class="active"><i class="fas fa-star"></i></div>
@@ -33,25 +34,25 @@ const templatingHtml = {
                     <div>
                          출발지 ${item.departureName} → 도착지 ${item.destinationName}
                     </div>
-                    <div>
-                        출발 터미널 ${depTerminalInfo.Tmname}
-                    </div>
-                    <div>
-                        <span>빈 보관대 수 ${depTerminalInfo.Emptycnt}</span>
-                        <span>주차된 자전거 수 ${depTerminalInfo.Parkcnt}</span>
-                    </div>
-                    <div>
-                        도착 터미널 ${desTerminalInfo.Tmname}
-                    </div>
-                    <div>
-                        <span>빈 보관대 수 ${desTerminalInfo.Emptycnt}</span>
-                        <span>주차된 자전거 수 ${desTerminalInfo.Parkcnt}</span>
-                    </div>
                 </div>
                 <div class="btn-group">
                     <div id="bookmark-star" class="active"><i class="fas fa-star"></i></div>
                 </div>
             </li>`;
+        // let temp = `<div>
+        //                 출발 터미널 ${depTerminalInfo.Tmname}
+        //             </div>
+        //             <div>
+        //                 <span>빈 보관대 수 ${depTerminalInfo.Emptycnt}</span>
+        //                 <span>주차된 자전거 수 ${depTerminalInfo.Parkcnt}</span>
+        //             </div>
+        //             <div>
+        //                 도착 터미널 ${desTerminalInfo.Tmname}
+        //             </div>
+        //             <div>
+        //                 <span>빈 보관대 수 ${desTerminalInfo.Emptycnt}</span>
+        //                 <span>주차된 자전거 수 ${desTerminalInfo.Parkcnt}</span>
+        //             </div>`;
     }
 }
 
@@ -79,7 +80,7 @@ async function getBookmarkList() {
     // 회원별 북마크한 정거장 정보 가져오기
     let bookmarkStationResponse = await fetch(`${location.pathname}/station`);
     let bookmarkStationJson = await bookmarkStationResponse.json();
-
+    console.log( bookmarkStationJson.stations);
     bookmarkStationJson.stations.forEach(function(item) {
         let stationId = item.stationId.toString();
         let terminalInfo = terminalInfoList.find(info => info.Vno === stationId)
@@ -90,11 +91,11 @@ async function getBookmarkList() {
     let bookmarkRouteResponse = await fetch(`${location.pathname}/route`);
     let bookmarkRouteJson = await bookmarkRouteResponse.json();
     bookmarkRouteJson.routes.forEach(item => {
-        let depId = item.departureStationId.toString();
-        let desId = item.destinationStationId.toString();
-        let depTerminalInfo = terminalInfoList.find(info => info.Vno === depId);
-        let desTerminalInfo = terminalInfoList.find(info => info.Vno === desId);
-        templatingHtml.routeList(bookmarkRouteList, item, depTerminalInfo, desTerminalInfo);
+        // let depId = item.departureStationId.toString();
+        // let desId = item.destinationStationId.toString();
+        // let depTerminalInfo = terminalInfoList.find(info => info.Vno === depId);
+        // let desTerminalInfo = terminalInfoList.find(info => info.Vno === desId);
+        templatingHtml.routeList(bookmarkRouteList, item); //, depTerminalInfo, desTerminalInfo);
     })
 }
 
@@ -126,7 +127,7 @@ bookmarkStationList.addEventListener('click', (evt)=>{
 
     } else if (target.closest("li").className==="list-item") {
         // stationId와 정류소 이름을 세션 스토리지에 담아서 /search로 이동한다.
-        console.log(stationId);
+        sessionStorage.setItem("searchParam", JSON.stringify({"stationId" : stationId}));
     }
 });
 bookmarkRouteList.addEventListener('click', (evt)=>{

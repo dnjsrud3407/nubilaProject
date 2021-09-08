@@ -268,7 +268,7 @@ ul#search-btn-group {
     margin-bottom: .3em;
 }
 .map-section {
-    max-width: 800px;
+    max-width: 850px;
     margin-left: 350px;
     margin-top: .5em;
 }
@@ -379,8 +379,19 @@ ul#search-btn-group {
         max-width: 350px;
     }
 }
-
-
+#searchRouteResult #bookmark-star {
+    float: right;
+    cursor: pointer;
+    background-color: #fff3e2;
+    padding: .3em;
+    border-radius: 4px;
+}
+#searchRouteResult #bookmark-star>span {
+    margin-left: .5em;
+    color: #4a4a4a;
+    font-size: .9em;
+    font-weight: 600;
+}
 #img {
     text-align: center;
 }
