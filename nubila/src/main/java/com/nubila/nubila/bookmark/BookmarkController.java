@@ -112,10 +112,12 @@ public class BookmarkController {
         Map<String, Object> map = new HashMap<>();
         SecurityUser customUserDetails = (SecurityUser) authentication.getPrincipal();
         long userId = customUserDetails.getId();
-        Long id = Long.valueOf((String) reqMap.get("id"));
+        String departureName = (String) reqMap.get("departureName");
+        String destinationName = (String) reqMap.get("destinationName");
         BookmarkRouteDto bookmarkRouteDto = BookmarkRouteDto.builder()
-                .id(id)
                 .userId(userId)
+                .departureName(departureName)
+                .destinationName(destinationName)
                 .status(Status.DELETED)
                 .modifyDate(LocalDateTime.now())
                 .build();

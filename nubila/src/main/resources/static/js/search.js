@@ -672,7 +672,11 @@ listSection.addEventListener('click', (evt)=>{
             if (listSection.id === "searchRouteResult") {
                 // 북마크 route delete fetch 요청
                 let routeId = div.querySelector("span").id;
-                fetchData('bookmark/route', 'PUT', {id: routeId}, true)
+                let data = {
+                    departureName: departure.name,
+                    destinationName: destination.name
+                }
+                fetchData('bookmark/route', 'PUT', data, true)
                     .then(res => console.log('Success:', JSON.stringify(res)))
                     .catch(error => console.error("에러가 발생하였습니다."));
             } else {
@@ -696,17 +700,9 @@ listSection.addEventListener('click', (evt)=>{
                     departureStationId: departure.isTerminal,
                     destinationStationId: destination.isTerminal
                 };
-                let result = fetchData('bookmark/route', 'POST', data, true)
-                    .then(async (res)=> {
-                        console.log('Success');
-                        let jsonResult = await JSON.stringify(res);
-                        return jsonResult;
-                    })
+                fetchData('bookmark/route', 'POST', data, true)
+                    .then(res => console.log('Success:', JSON.stringify(res)))
                     .catch(error => console.error("에러가 발생하였습니다."));
-                if (result) {
-                    console.log(result);
-                    div.querySelector("span").id = result.resultId;
-                }
             } else {
                 // 북마크 station add fetch 요청
                 let stationId = target.closest("li").id;

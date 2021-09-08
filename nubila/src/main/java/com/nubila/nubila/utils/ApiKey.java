@@ -43,6 +43,7 @@ public class ApiKey {
             randFlag = 1;
             return getNubijaApiH();
         } else {
+            randFlag = 0;
             return getNubijaApiJ();
         }
     }

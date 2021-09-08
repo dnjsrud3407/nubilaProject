@@ -43,6 +43,6 @@ public interface BookmarkRepository {
     void insertBookmarkRoute(BookmarkRouteDto bookmarkRouteDto);
 
     @Update("update bookmark_route set status = #{status}, modify_date = #{modifyDate} " +
-            "where id = #{id} and status = 'NORMAL'")
+            "where departure_name = #{departureName} and destination_name = #{destinationName} and status = 'NORMAL'")
     boolean updateBookmarkRouteStatus(BookmarkRouteDto bookmarkRouteDto);
 }
