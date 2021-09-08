@@ -18,7 +18,7 @@ const templatingHtml = {
                         <span>빈 보관대 수 ${terminalInfo.Emptycnt}</span>
                     </div>
                 </div>
-                <div class="btn-group">
+                <div class="btn-group bookmark-btn">
                     <ul id="search-btn-group">
                         <li><a>출발</a></li>
                         <li><a>도착</a></li>
@@ -34,7 +34,7 @@ const templatingHtml = {
                     <div>출발지 <span id="departure-name">${item.departureName}</span> </div>
                     <div>→ 도착지 <span id="destination-name">${item.destinationName}</span></div>         
                 </div>
-                <div class="btn-group">
+                <div class="btn-group bookmark-btn">
                     <div id="bookmark-star" class="active"><i class="fas fa-star"></i></div>
                 </div>
             </li>`;

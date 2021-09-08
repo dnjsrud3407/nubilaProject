@@ -30,16 +30,25 @@ async function getCurrentLatLon() {
 //지도에서 내 위치로 이동
 async function setMyLocation(){
     //TODO 추후 위치 이동하면서 체크해야 함
-    if (isLocationAccessed) {
+    try {
         latlon = await getCurrentLatLon();
-        let result = await reverseGeoTmap(latlon[0], latlon[1]);
-        myLocation = {
-            "name" : result,
-            "lat" : latlon[0],
-            "lon" : latlon[1],
-            "isTerminal" : 0
-        };
+    } catch (e) {
+        divAlert("위치 액세스가 거부되어 기본 위치(창원시청)로 내 위치가 지정됩니다. 내 위치를 확인하려면 위치 액세스를 허용해주세요.");
     }
+
+    let result = await reverseGeoTmap(latlon[0], latlon[1]);
+    myLocation = {
+        "name" : result,
+        "lat" : latlon[0],
+        "lon" : latlon[1],
+        "isTerminal" : 0
+    };
+    let myMarker = new Tmapv2.Marker({
+        position: new Tmapv2.LatLng(latlon[0], latlon[1]), //Marker의 중심좌표 설정.
+        icon : "http://tmapapi.sktelecom.com/upload/tmap/marker/pin_r_m_m.png",
+        map: map,
+        title: "내 위치"
+    });
     map.setCenter(new Tmapv2.LatLng(latlon[0], latlon[1])); // 지도의 중심 좌표를 설정합니다.
 }
 function initTmap(){
@@ -51,12 +60,6 @@ function initTmap(){
         height: "400px",
         zoomControl : true,
         scrollwheel : true,
-    });
-    let myMarker = new Tmapv2.Marker({
-        position: new Tmapv2.LatLng(latlon[0], latlon[1]), //Marker의 중심좌표 설정.
-        icon : "http://tmapapi.sktelecom.com/upload/tmap/marker/pin_r_m_m.png",
-        map: map,
-        title: "내 위치"
     });
 }
 //좌표의 주소를 얻기 위한 리버스 지오코딩 요청 함수
@@ -246,7 +249,7 @@ async function searchPlaceEventHandler(evt, el) {
     listSection.innerHTML = '';
 
     if (searchKeyword === "내 위치" || searchKeyword === "내위치") {
-        setMyLocation();
+        await setMyLocation();
         switch (el.id) {
             case "dep-search-btn" :
                 departure = myLocation;
@@ -340,7 +343,7 @@ function setDeparture(listItem) {
     depMarker = new Tmapv2.Marker(
         {
             position : new Tmapv2.LatLng(departure.lat, departure.lon),
-            icon : "http://tmapapi.sktelecom.com/upload/tmap/marker/pin_r_m_s.png",
+            icon : "http://topopen.tmap.co.kr/imgs/start.png",
             title : departure.name,
             map : map
         });
@@ -359,7 +362,7 @@ function setDestination(listItem) {
     desMarker = new Tmapv2.Marker(
         {
             position : new Tmapv2.LatLng(destination.lat, destination.lon),
-            icon : "http://tmapapi.sktelecom.com/upload/tmap/marker/pin_r_m_e.png",
+            icon : "http://topopen.tmap.co.kr/imgs/arrival.png",
             title : destination.name,
             map : map
         });
@@ -468,8 +471,11 @@ function removeEl(btn) {
     div.remove();
 }
 function divAlert(message) {
-    let div = `<div class="alert"><span>${message}</span><button title="삭제하기" onclick="removeEl(this)">x</button></div>`
-    document.querySelector(".search-wrap").insertAdjacentHTML('afterbegin', div);
+    let container = document.querySelector(".search-wrap");
+    if (!container.querySelector(".alert")) {
+        let div = `<div class="alert"><span>${message}</span><button title="삭제하기" onclick="removeEl(this)">x</button></div>`
+        container.insertAdjacentHTML('afterbegin', div);
+    }
 }
 async function searchRoute() {
     //TODO 내 위치로 경로 검색시 departure, destination 업데이트하기
@@ -512,7 +518,7 @@ async function searchRoute() {
             passList.push(`${terminal.Longitude},${terminal.Latitude}`);
             temp.push({depIndex: i, desIndex: 0});
         });
-        console.log(destination.isTerminal);
+
         DesTerminalInfoList = [ terminalInfoList.find( item => item.Vno === String(destination.isTerminal) ) ];
     } else if (destination.isTerminal===0) {
         terminalInfoList.forEach(item => {
@@ -554,7 +560,7 @@ async function searchRoute() {
             let searchRouteJson = await searchRouteResponse.json();
             temp[i].route = searchRouteJson.features;
         } catch (e) {
-            console.log(`response error: ${e}`);
+            console.log(`response error: tmap 경로 탐색 에러 ${e}`);
         }
         i++
         await sleep(500); // 티맵 api 무료 이용시 1분에 2회 요청 제한
@@ -566,9 +572,7 @@ async function searchRoute() {
 
     // 리스트 작성하기
     if (routeResult.length > 0) {
-        console.log(routeResult);
         listSection.innerHTML = "";
-        console.log(DepTerminalInfoList);
 
         routeResult.forEach( (item, index) => {
             let template =
@@ -622,6 +626,7 @@ async function searchRoute() {
         // 맵에 첫번째 경로 그리기
         listSection.firstChild.classList.add("selected");
         selectedIndex = 0;
+        console.log(routeResult);
         drawRoute(selectedIndex, DepTerminalInfoList, DesTerminalInfoList, routeResult);
 
     } else {
@@ -630,22 +635,8 @@ async function searchRoute() {
 }
 
 async function base() {
-    try {
-        latlon = await getCurrentLatLon();
-        isLocationAccessed = true;
-    } catch (e) {
-        divAlert("위치 액세스가 거부되어 기본 위치(창원시청)로 내 위치가 지정됩니다. 내 위치를 확인하려면 위치 액세스를 허용해주세요.");
-        isLocationAccessed = false;
-    }
     initTmap();
-
-    let result = await reverseGeoTmap(latlon[0], latlon[1]);
-    myLocation = {
-        "name" : result,
-        "lat" : latlon[0],
-        "lon" : latlon[1],
-        "isTerminal" : 0
-    }
+    await setMyLocation();
     departure = myLocation;
 
     // 세션스토리지 확인 분기
@@ -683,7 +674,7 @@ async function base() {
                 if (depMarker) depMarker.setMap(null);
                 depMarker = new Tmapv2.Marker({
                         position : new Tmapv2.LatLng(departure.lat, departure.lon),
-                        icon : "http://tmapapi.sktelecom.com/upload/tmap/marker/pin_r_m_s.png",
+                        icon : "http://topopen.tmap.co.kr/imgs/start.png",//"http://tmapapi.sktelecom.com/upload/tmap/marker/pin_r_m_s.png",
                         title : departure.name,
                         map : map
                     });
@@ -700,7 +691,7 @@ async function base() {
                 if (desMarker) desMarker.setMap(null);
                 desMarker = new Tmapv2.Marker({
                         position : new Tmapv2.LatLng(destination.lat, destination.lon),
-                        icon : "http://tmapapi.sktelecom.com/upload/tmap/marker/pin_r_m_e.png",
+                        icon : "http://topopen.tmap.co.kr/imgs/arrival.png", //"http://tmapapi.sktelecom.com/upload/tmap/marker/pin_r_m_e.png",
                         title : destination.name,
                         map : map
                     });
@@ -733,7 +724,7 @@ async function base() {
             if (depMarker) depMarker.setMap(null);
             depMarker = new Tmapv2.Marker({
                     position : new Tmapv2.LatLng(departure.lat, departure.lon),
-                    icon : "http://tmapapi.sktelecom.com/upload/tmap/marker/pin_r_m_s.png",
+                    icon : "http://topopen.tmap.co.kr/imgs/start.png",
                     title : departure.name,
                     map : map
                 });
@@ -747,7 +738,7 @@ async function base() {
             if (desMarker) desMarker.setMap(null);
             desMarker = new Tmapv2.Marker({
                     position : new Tmapv2.LatLng(destination.lat, destination.lon),
-                    icon : "http://tmapapi.sktelecom.com/upload/tmap/marker/pin_r_m_s.png",
+                    icon : "http://topopen.tmap.co.kr/imgs/arrival.png",
                     title : destination.name,
                     map : map
                 });

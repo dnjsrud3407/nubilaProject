@@ -198,11 +198,9 @@ input[type="search"]:focus {
     padding: 8px 10px;
 }
 
-#bookmark-station {
+#bookmark-station, #bookmark-route {
     flex: 1;
-}
-#bookmark-route {
-    flex: 1;
+    min-width: 0;
 }
 #bookmark-station li, #bookmark-route li, #result-list-section li {
     cursor: pointer;
@@ -237,7 +235,14 @@ ul#search-btn-group {
 #search-btn-group a:hover {
     color: #ff7b25;
 }
-
+.list-item div, .list-item span{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.btn-group.bookmark-btn {
+    flex-shrink: 0;
+}
 /* bookmark star */
 #bookmark-star {
     align-self: flex-end;
