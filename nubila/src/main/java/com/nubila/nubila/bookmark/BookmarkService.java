@@ -38,8 +38,15 @@ public class BookmarkService {
         return bookmarkRepository.selectBookmarkRouteAll(start, userId, status);
     }
 
+    public Long addBookmarkRoute(BookmarkRouteDto bookmarkRouteDto) {
+        bookmarkRepository.insertBookmarkRoute(bookmarkRouteDto);
+        Long id = bookmarkRouteDto.getId();
+        return id;
+    }
 
     public boolean editBookmarkRouteStatusToDeleted(BookmarkRouteDto bookmarkRouteDto) {
         return bookmarkRepository.updateBookmarkRouteStatus(bookmarkRouteDto);
     }
+
+
 }
