@@ -241,11 +241,13 @@ ul#search-btn-group {
 /* bookmark star */
 #bookmark-star {
     align-self: flex-end;
+}
+#bookmark-star>i{
     display: inline-block;
     color: #adadad;
     font-size: 1.2em;
 }
-#bookmark-star.active {
+#bookmark-star.active>i {
     color: #ffc107;
 }
 
@@ -289,7 +291,7 @@ ul#search-btn-group {
     display: none;
 }
 
-#place-search-btn, #search-route-btn, #my-location-btn, #nearby-btn>button {
+#place-search-btn, #search-route-btn, #my-location-btn, .nearby-btn>button {
     padding: .4em .6em;
     background-color: rgba(69, 120, 220, 0.1);
     border-radius: 4px;
@@ -391,6 +393,10 @@ ul#search-btn-group {
     color: #4a4a4a;
     font-size: .9em;
     font-weight: 600;
+}
+.info {
+    font-weight: 600;
+    margin-top: 2em;
 }
 #img {
     text-align: center;
