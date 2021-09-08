@@ -628,7 +628,7 @@ async function base() {
                 drawRoute(selectedIndex, DepTerminalInfoList, DesTerminalInfoList, routeResult);
 
             } else {
-                listSection.innerHTML = "<div>경로 탐색 결과가 없습니다. 다시 확인해주세요.😥</div>"
+                listSection.innerHTML = `<div>경로 탐색 결과가 없습니다. 다시 확인해주세요.😥</div>`;
             }
         }
     })
@@ -671,19 +671,19 @@ listSection.addEventListener('click', (evt)=>{
             div.className = "";
             if (listSection.id === "searchRouteResult") {
                 // 북마크 route delete fetch 요청
-                let data = {id:1};
-                fetchData('bookmark/route', 'PUT', data, true)
+                let routeId = div.querySelector("span").id;
+                fetchData('bookmark/route', 'PUT', {id: routeId}, true)
                     .then(res => console.log('Success:', JSON.stringify(res)))
-                    .catch(error => console.error(error));
+                    .catch(error => console.error("에러가 발생하였습니다."));
             } else {
                 // 북마크 station delete fetch 요청
                 let stationId = target.closest("li").id;
                 fetchData('bookmark/station', 'PUT', {"stationId": stationId}, true)
                     .then(res => console.log('Success:', JSON.stringify(res)))
-                    .catch(error => console.error(error));
+                    .catch(error => console.error("에러가 발생하였습니다."));
             }
         } else {
-            target.closest("div").className = "active";
+            div.className = "active";
             if (listSection.id === "searchRouteResult") {
                 // 북마크 route add fetch 요청
                 let data = {
@@ -696,15 +696,23 @@ listSection.addEventListener('click', (evt)=>{
                     departureStationId: departure.isTerminal,
                     destinationStationId: destination.isTerminal
                 };
-                fetchData('bookmark/route', 'POST', data, true)
-                    .then(res => console.log('Success:', JSON.stringify(res)))
-                    .catch(error => console.error(error));
+                let result = fetchData('bookmark/route', 'POST', data, true)
+                    .then(async (res)=> {
+                        console.log('Success');
+                        let jsonResult = await JSON.stringify(res);
+                        return jsonResult;
+                    })
+                    .catch(error => console.error("에러가 발생하였습니다."));
+                if (result) {
+                    console.log(result);
+                    div.querySelector("span").id = result.resultId;
+                }
             } else {
                 // 북마크 station add fetch 요청
                 let stationId = target.closest("li").id;
                 fetchData('bookmark/station', 'POST', {"stationId": stationId}, true)
                     .then(res => console.log('Success:', JSON.stringify(res)))
-                    .catch(error => console.error(error));
+                    .catch(error => console.error("에러가 발생하였습니다."));
             }
         }
     } else if (div.className === "nearby-btn") {
