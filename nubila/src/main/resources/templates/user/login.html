@@ -2,18 +2,18 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
-    <title>NUBILA🎵 로그인</title>
+    <title>NUBILA 로그인</title>
     <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
     <link rel="stylesheet" href="css/haonstyle.css" th:href="@{/css/haonstyle.css}">
     <link th:href="@{/css/user.css}" rel="stylesheet">
-<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-<script th:src="@{/js/user.js}"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script th:src="@{/js/user.js}"></script>
 </head>
 <body>
 <div class="login-wrapper">
 <div class="container">
     <div class="nav-logo-big">
-        <a href="/"><span>🎵</span><span>NUBILA</span></a>
+        <a href="/"><img th:src="@{/img/bicycleicon.png}" width="55px" style="padding-bottom: 5px;" /><span>NUBILA</span></a>
     </div>
     <form th:action th:object="${user}" method="post" onsubmit="return validation_login()">
         <div class="form-div">

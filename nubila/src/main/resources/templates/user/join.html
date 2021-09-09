@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta id="_csrf" name="_csrf" th:content="${_csrf.token}"/>
     <meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}"/>
-    <title>NUBILA🎵 회원가입</title>
+    <title>NUBILA 회원가입</title>
     <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
     <link rel="stylesheet" href="css/haonstyle.css" th:href="@{/css/haonstyle.css}">
     <link th:href="@{/css/user.css}" rel="stylesheet">
@@ -15,7 +15,7 @@
 <div class="join-wrapper">
 <div class="container">
     <div class="nav-logo-big">
-        <a href="/"><span>🎵</span><span>NUBILA</span></a>
+        <a href="/"><img th:src="@{/img/bicycleicon.png}" width="55px" style="padding-bottom: 5px;" /><span>NUBILA</span></a>
     </div>
     <form action="item.html" th:action th:object="${user}" method="post" onsubmit="return validation()">
         <div class="form-div">
