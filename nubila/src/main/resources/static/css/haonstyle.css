@@ -24,6 +24,16 @@ input[type="search"]:focus {
     border: 1px solid rgba(81, 203, 238, 1);
     box-shadow: 0 0 5px rgba(81, 203, 238, 1);
 }
+.fw-normal {
+    font-weight: 500;
+}
+.number {
+    font-weight: 600;
+    margin: 0 .5em;
+}
+.flex-container {
+    display: flex;
+}
 /* 헤더 navbar */
 #header {
     margin: auto;
@@ -61,16 +71,11 @@ input[type="search"]:focus {
     justify-content: flex-end;
 }
 .nav-member li {
-    background-color: rgba(69, 120, 220, 0.1);
     border-radius: 10px;
     margin-left: 6px;
 }
 .nav-member button {
-    border: none;
     font-size: 1em;
-    background-color: transparent;
-    font-weight: 600;
-    color: #4a4a4a;
 }
 .nav-toggle-btn {
     display: none;
@@ -174,7 +179,7 @@ input[type="search"]:focus {
 
 /* 북마크 section */
 #bookmark-container {
-    max-width: 1200px;
+    max-width: 1000px;
     margin:auto;
     padding: 0 1.5rem;
 }
@@ -229,16 +234,20 @@ ul#search-btn-group {
 #search-btn-group>li {
     border: none;
     margin: .4em .4em 0 0;
-    background-color: #ffdbb1;
+    color: #fff;
+    background-color: #57c17c;
     padding: .5em;
 }
 #search-btn-group a:hover {
-    color: #ff7b25;
+
 }
 .list-item div, .list-item span{
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+}
+.list-item div {
+    padding: .1em 0;
 }
 .btn-group.bookmark-btn {
     flex-shrink: 0;
@@ -403,6 +412,11 @@ ul#search-btn-group {
     font-weight: 600;
     margin-top: 2em;
 }
+.marker-img {
+    margin-right: 1em;
+}
+
+/* main 소개 */
 #img {
     text-align: center;
 }
@@ -411,4 +425,21 @@ ul#search-btn-group {
 }
 .example_img {
     width: 45%;
+}
+.btn-ok, .btn-ok:hover {
+    background-color: #57c17c;
+    border: #4cae4c 1px solid;
+}
+.btn-ok>a, .btn-ok>a:hover  {
+    color: #fff;
+    font-weight : bold;
+}
+.btn-ok-white, .btn-ok-white:hover {
+    background-color: #fff;
+    border: #4cae4c 1px solid;
+}
+.btn-ok-white a, .btn-ok-white a:hover, .btn-ok-white button, .btn-ok-white button:hover{
+    color: #57c17c;
+    font-weight : bold;
+    background-color: #fff;
 }

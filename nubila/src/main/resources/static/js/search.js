@@ -203,17 +203,25 @@ async function getNearbyTermianl(pos, title="내 위치") {
     sortedTerminalInfoList5.forEach((item, index) => {
         let template =
             `<li class="list-item ${index}" id="${item.Vno}">
-                <div>
-                    <div class="place-name">
-                        ${item.Tmname}
+                <div class="flex-container">
+                    <div class="marker-img">
+                        <img src="http://tmapapi.sktelecom.com/upload/tmap/marker/pin_b_m_${index + 1}.png">
                     </div>
                     <div>
-                        <span>빈 보관대 수 ${item.Emptycnt}</span>
-                        <span>주차된 자전거 수 ${item.Parkcnt}</span>
+                        <div class="place-name">
+                            ${item.Tmname}
+                        </div>
+                        <div class="fw-normal">
+                            대여 가능 자전거 수<span class="number">${item.Parkcnt}</span>대
+                        </div>
+                        <div class="fw-normal">
+                            빈 보관대 수<span class="number">${item.Emptycnt}</span>대
+                        </div>
+                        <input type="hidden" name="lat" value="${item.Latitude}" >
+                        <input type="hidden" name="lon" value="${item.Longitude}">
                     </div>
-                    <input type="hidden" name="lat" value="${item.Latitude}" >
-                    <input type="hidden" name="lon" value="${item.Longitude}">
-                </div>
+                    
+                </div>                    
                 <div class="btn-group">
                     <ul id="search-btn-group">
                         <li onclick="setDepDesClickHandler(this)"><a>출발</a></li>
@@ -286,18 +294,23 @@ async function searchPlaceEventHandler(evt, el) {
             });
             markerArray[index] = marker;
             template +=`<li class="list-item ${index}">
+                            <div class="flex-container">
+                                <div class="marker-img">
+                                    <img src="http://tmapapi.sktelecom.com/upload/tmap/marker/pin_b_m_${index + 1}.png">
+                                </div>
                                 <div>
                                     <div class="place-name">
                                         ${item.name}
                                     </div>
                                     <div>
-                                        <div>${item.newAddressList.newAddress[0].fullAddressRoad}</div>
-                                        <span>tel. ${item.telNo}</span>
+                                        <div class="fw-normal">${item.newAddressList.newAddress[0].fullAddressRoad}</div>
+                                        <div class="fw-normal">tel. ${item.telNo}</div>
                                         <input type="hidden" name="lat" value="${item.noorLat}">
                                         <input type="hidden" name="lon" value="${item.noorLon}">
                                     </div>
                                 </div>
-                                {btn-group}
+                            </div>    
+                            {btn-group}
                             </li>`;
         })
     if (el.id === "place-search-btn") {
@@ -581,20 +594,22 @@ async function searchRoute() {
                             <div>
                                 출발 터미널 ${DepTerminalInfoList[item.depIndex].Tmname}
                             </div>
-                            <div>
-                                <span>빈 보관대 수 ${DepTerminalInfoList[item.depIndex].Emptycnt}</span>
-                                <span>주차된 자전거 수 ${DepTerminalInfoList[item.depIndex].Parkcnt}</span>
+                            <div class="fw-normal">
+                                대여 가능 자전거 수<span class="number">${DepTerminalInfoList[item.depIndex].Parkcnt}</span>대
+                            </div>
+                            <div class="fw-normal">
+                                빈 보관대 수<span class="number">${DepTerminalInfoList[item.depIndex].Emptycnt}</span>대
                             </div>
                             <div>
-                                도착 터미널 ${DesTerminalInfoList[item.desIndex].Tmname}
+                                → 도착 터미널 ${DesTerminalInfoList[item.desIndex].Tmname}
                             </div>
-                            <div>
-                                <span>빈 보관대 수 ${DesTerminalInfoList[item.desIndex].Emptycnt}</span>
-                                <span>주차된 자전거 수 ${DesTerminalInfoList[item.desIndex].Parkcnt}</span>
+                            <div class="fw-normal">
+                                대여 가능 자전거 수<span class="number">${DesTerminalInfoList[item.desIndex].Parkcnt}</span>대
                             </div>
-                            <div>
-                                <span>총 이동거리 ${item.route[0].properties.totalDistance} m</span>
+                            <div class="fw-normal">
+                                빈 보관대 수<span class="number">${DesTerminalInfoList[item.desIndex].Emptycnt}</span>대
                             </div>
+                            <div>총 이동거리<span class="number">${item.route[0].properties.totalDistance.toLocaleString('ko-KR')}</span>>m</div>
                         </div>
                     </li>`
             listSection.innerHTML += template;
@@ -701,11 +716,13 @@ async function base() {
                                     <div class="place-name">
                                         ${terminalInfo.Tmname}
                                     </div>
-                                    <div>
-                                        <span>주차된 자전거 수 ${terminalInfo.Parkcnt}</span>
-                                        <span>빈 보관대 수 ${terminalInfo.Emptycnt}</span>
+                                    <div class="fw-normal">
+                                        대여 가능 자전거 수<span class="number">${terminalInfo.Parkcnt}</span>대
                                     </div>
-                                    <input type="hidden" name="lat" value="${terminalInfo.Latitude}" >
+                                    <div class="fw-normal">
+                                        빈 보관대 수<span class="number">${terminalInfo.Emptycnt}</span>대
+                                    </div>
+                                    <input type="hidden" name="lat" value="${terminalInfo.Latitude}">
                                     <input type="hidden" name="lon" value="${terminalInfo.Longitude}">
                                 </div>
                             </li>`

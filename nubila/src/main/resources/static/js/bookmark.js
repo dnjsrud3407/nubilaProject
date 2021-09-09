@@ -13,9 +13,11 @@ const templatingHtml = {
                     <div>
                         ${terminalInfo.Tmname}
                     </div>
-                    <div>                        
-                        <span>주차된 자전거 수 ${terminalInfo.Parkcnt}</span>
-                        <span>빈 보관대 수 ${terminalInfo.Emptycnt}</span>
+                    <div class="fw-normal">
+                        대여 가능 자전거 수<span class="number">${terminalInfo.Parkcnt}</span>대
+                    </div>
+                    <div class="fw-normal">
+                        빈 보관대 수<span class="number">${terminalInfo.Emptycnt}</span>대
                     </div>
                 </div>
                 <div class="btn-group bookmark-btn">
