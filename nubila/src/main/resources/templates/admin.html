@@ -5,9 +5,9 @@
 	  <meta id="_csrf" name="_csrf" th:content="${_csrf.token}" />
 	  <meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}" />
 	  <title>ADMIN</title>
-	  <link th:href="@{/css/haonstyle.css}" rel="stylesheet" />
 	  <link th:href="@{/css/bootstrap.min.css}"
 			href="../css/bootstrap.min.css" rel="stylesheet" />
+	  <link th:href="@{/css/haonstyle.css}" rel="stylesheet" />
 	  <link th:href="@{/css/jmstyle.css}" rel="stylesheet" />
 	  <script type="text/javascript" src="js/header.js" defer></script>
 	  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
@@ -18,6 +18,7 @@
   	<div th:replace="fragments/header :: nav"></div>
 	<section id="content-section">
 		<nav id="side-menu-nav">
+			<h1>관리자 페이지</h1>
 		  <ul id="side-menu">
 			<li id="notice">공지 사항</li>
 			<li id="inquery">문의 사항</li>
@@ -25,7 +26,6 @@
 		  </ul>
 		</nav>
 		<div id="container">
-			<h1>관리자 페이지</h1>
 			<h2 id="menu-name">메뉴를 선택하세요</h2>
 			<div id="print-section"></div>
 		</div>
@@ -92,7 +92,7 @@
       </form>
 	  <div class="modal-footer">
 	  <button type="button" id="updatebtn" class="btn btn-success" onclick="updateContent()">수정</button>
-	  <button type="button" id="deletebtn" class="btn btn-warning" onclick="deleteContent({menu})">삭제</button>
+	  <button type="button" id="deletebtn" class="btn btn-success" onclick="deleteContent({menu})">삭제</button>
 	  </div>
 	</script>
 	<script id="member-template" type="text/template">

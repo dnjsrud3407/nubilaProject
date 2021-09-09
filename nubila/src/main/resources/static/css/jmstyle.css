@@ -1,59 +1,9 @@
 @charset "UTF-8";
-/* 헤더 navbar */
-#header {
-    margin: auto;
-    max-width: 1200px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 1.5rem;
-}
-#header h2{ margin: 1rem;}
-/*#header h2,*/
-#header li{
-    font-weight: 600;
-    padding: .5em;
-}
-.nav-menu, .nav-member{
-    display: flex;
-}
-.nav-menu a, .nav-member a {
-    color: #4a4a4a;
-}
-/*:is(.nav-menu, .nav-member) a:hover{*/
-.nav-menu a:hover, .nav-member a:hover{
-    color: #1dc078;
-}
-.nav-logo{
-    flex-grow:1;
-    font-size: 1.5em;
-    font-weight: 800;
-    text-align: center;
-}
-.nav-menu{flex-grow: 3}
-.nav-member{
-    flex-grow:1;
-    justify-content: flex-end;
-}
-.nav-member li {
-    background-color: rgba(69, 120, 220, 0.1);
-    border-radius: 10px;
-    margin-left: 6px;
-}
-.nav-member button {
-    border: none;
-    font-size: 1em;
-    background-color: transparent;
-    font-weight: 600;
-    color: #4a4a4a;
-}
-.nav-toggle-btn {
-    display: none;
-}
 
 /* contianer section*/
 section {
     overflow:hidden;
+    margin-top: 2em;
 }
 
 #side-menu-nav, #container {
@@ -63,50 +13,107 @@ section {
     width:25%;
 }
 
+#side-menu-nav h1{
+    text-align: center;
+    color: black;
+    margin: 20px 20px 2rem;
+    font-weight: bold;
+    font-size: 25px;
+}
+
 #container {
     width:70%;
 }
 
-#content-section h1, #container h1 {
-    color: green;
-    margin:20px;
+#content-section h1, #menu-name {
+    color: black;
+    margin: 20px 20px 2rem;
     font-weight: bold;
+    font-size: 25px;
 }
 
 #side-menu {
     list-style: none;
     margin: 20px;
+    text-align: center;
 }
 
 #side-menu li {
-    margin: 10px;
+    margin: 10px 10px 1rem;
     font-weight: bold;
     cursor: pointer;
 }
 
 #side-menu li.selected {
-    color: green;
+    color: #57c17c;
 }
 
-#menu-name {
-    margin-top: 10px;
-}
-
-table{
-    margin: 10px;
+.table{
+    width: 90%;
 }
 
 #title-td{
     cursor: pointer;
 }
+.card {
+    margin-top: 2rem;
+}
 
-#noticelist-btn, #writeanswerbtn {
+.card-header{
+    font-weight: bold;
+}
+
+.list-group-item{
+    padding: 16px;
+    color: #4A4A4A;
+}
+#answers > li.list-group-item.list-group-item-success{
+    background-color: #d1e7dd66;
+}
+
+#noticelist-btn, #writeanswerbtn, #deleteInquerybtn, #answerbtn {
     margin-top: 10px;
     float: right;
 }
 
-#writeinquerybtn {
+#writeinquerybtn, #deleteanswerbtn, #answerupdatebtn {
     float: right;
+}
+#deleteanswerbtn {
+    margin-top: 3rem;
+}
+
+#answerCreatedate {
+    float:left;
+}
+
+#answerContent{
+    margin-top: 2em;
+    margin-bottom: 2em;
+}
+
+.btn-success {
+    background-color: #57c17c;
+}
+
+#list-btn {
+    margin-top: 10px;
+}
+
+#inquery-info, #answerCreatedate {
+    font-size: 0.8rem;
+    margin-top: 3rem;
+}
+
+#deletebtn {
+    color: #57c17c;
+    background-color: #ffffff;
+    border-color: #57c17c;
+}
+
+#answer-div {
+    justify-content: left;
+    display: block;
 }
 
 /* 모달 영역 */
