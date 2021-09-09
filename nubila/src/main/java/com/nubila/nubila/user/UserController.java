@@ -193,14 +193,4 @@ public class UserController {
         request.getSession().invalidate();
         return "user/deleteOk";
     }
-
-    @GetMapping("/list")
-    @ResponseBody
-    public Map<String, Object> userlist() {
-        List<User> userList = userService.getUser();
-        Map<String, Object> map = new HashMap<>();
-        map.put("list", userList);
-        return map;
-    }
-
 }

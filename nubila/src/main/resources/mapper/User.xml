@@ -2,6 +2,17 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.nubila.nubila.user.UserMapper">
+    <resultMap type="com.nubila.nubila.user.User" id="userSelectRM">
+        <result property="id" column="id"/>
+        <result property="user_login_id" column="user_login_id"/>
+        <result property="username" column="username"/>
+        <result property="email" column="email"/>
+        <result property="password" column="password"/>
+        <result property="create_time" column="create_time"/>
+        <result property="modify_date" column="modify_date"/>
+        <result property="role" column="role"/>
+        <result property="isEnabled" column="enabled"/>
+    </resultMap>
     <insert id="save" parameterType="com.nubila.nubila.user.User">
         INSERT INTO user(
             user_login_id, username, email, password, create_time, modify_date, role, enabled
@@ -42,7 +53,7 @@
         UPDATE user SET enabled = false WHERE user_login_id = #{user_login_id}
     </update>
 
-    <select id="getUser" resultType="com.nubila.nubila.user.User">
+    <select id="getUser" resultType="com.nubila.nubila.user.User" resultMap="userSelectRM">
         SELECT * FROM user
     </select>
 </mapper>
