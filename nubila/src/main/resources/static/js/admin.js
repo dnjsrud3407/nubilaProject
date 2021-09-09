@@ -1,4 +1,7 @@
 const contextPath = $('#contextPathHolder').attr('data-contextPath') ? $('#contextPathHolder').attr('data-contextPath') : '';
+const token = $("meta[name='_csrf']").attr("content");
+const header = $("meta[name='_csrf_header']").attr("content");
+
 // 메뉴 버튼 클릭 이벤트 등록
 function select(ul, li){
 	Array.from(ul.children).forEach(v =>
@@ -28,8 +31,6 @@ ul.addEventListener("click", function(evt){
 	}
 });
 
-const token = $("meta[name='_csrf']").attr("content");
-const header = $("meta[name='_csrf_header']").attr("content");
 
 //AJAX
 function ajaxGet(url, func) {
@@ -42,13 +43,16 @@ function ajaxGet(url, func) {
 	oReq.send();
 }
 
-function ajaxPost(url, data){
+function ajaxPost(url, data, Get, getUrl, func){
 	let oReq = new XMLHttpRequest();
 	oReq.addEventListener("load", function(){
 		//모달창 닫기
 		let modal = document.getElementById("modal");
 		modal.style.display="none";
 		//getajax
+		if (Get){
+			ajaxGet(getUrl, func);
+		}
 	});
 	oReq.open("POST", url);
 	oReq.setRequestHeader('Content-type', 'application/json');
@@ -132,8 +136,8 @@ function writeNotice(url){
 
 	ClassicEditor
 		.create( document.querySelector('#content'))
-		.then( editor => {
-			console.log( editor );
+		.then( newEditor => {
+			editor = newEditor;
 		} )
 		.catch( error => {
 			console.error( error );
@@ -159,16 +163,16 @@ function writeNotice(url){
     document.getElementById("createDate-label").remove();
     document.getElementById("modifyDate-label").remove();
     
-	// modalContent.insertAdjacentHTML("afterend", "<button type='button' id='registerbtn' class='btn btn-success btn-sm' onclick='registerNotice()'>등록</button>");
+	modalContent.insertAdjacentHTML("afterend", "<button type='button' id='registerbtn' class='btn btn-success btn-sm' onclick='registerNotice()'>등록</button>");
 }
 
 function registerNotice(){
 	let data = JSON.stringify({
 		title: document.getElementById('title').value,
-		content: document.getElementById('content').value,
+		content: editor.getData(),
 		status: document.getElementById('status').value
 	})
-	ajaxPost(contextPath+"/notice", data);
+	ajaxPost(contextPath+"/notice", data, true, contextPath+"/notice", getNotices);
 }
 
 // 공지 수정
@@ -176,7 +180,7 @@ function updateContent(){
 	let data = JSON.stringify({
 		id: document.getElementById('id').value,
 		title: document.getElementById('title').value,
-		content: document.getElementById('content').value,
+		content: editor.getData(),
 		status: document.getElementById('status').value
 	})
 	ajaxPost(contextPath+"/notice", data);
@@ -191,7 +195,7 @@ function deleteContent(menu){
 		content: document.getElementById('content').value,
 		status: "deleted"
 	})
-	ajaxPost(contextPath+"/"+menu, data);
+	ajaxPost(contextPath+"/"+menu, data, true, contextPath+"/notice", getNotices);
 }
 // 문의사항 목록
 function getInqueries(data) {
@@ -263,13 +267,14 @@ function getInqueryDetail(data){
 }
 // 문의사항 답변 등록
 function registerAnswer(){
+	let inqueryid = document.getElementById('id').value;
 	let data = JSON.stringify({
-		inqueryId: document.getElementById('id').value,
+		inqueryId: inqueryid,
 		content: document.getElementById('answer').value,
 		writer: "ADMIN",
 		status: 'normal'
 	})
-	ajaxPost(contextPath+"/answer", data);
+	ajaxPost(contextPath+"/answer", data, true, contextPath+"/answer/" + inqueryid, getAnswers);
 	document.getElementById('answer').value=""
 }
 // 문의사항 답변 수정
@@ -278,18 +283,18 @@ function answerUpdate(aid){
 	id: aid,
 	content: document.getElementById('answer').value
 	})
-	ajaxPost(contextPath+"/answer", data);
-	ajaxGet(contextPath+"/answer/" + el.id, getAnswers);
+	let inqueryid = document.getElementById('id').value;
+	ajaxPost(contextPath+"/answer", data, contextPath+"/answer/" + inqueryid, getAnswers);
 }
 
 // 문의사항 답변 삭제
-function deleteAnswer(){
-	let data = JSON.stringify({
-
-	})
-	ajaxPost(contextPath+"/answer", data);
-	ajaxGet(contextPath+"/answer/" + el.id, getAnswers);
-}
+// function deleteAnswer(){
+// 	let data = JSON.stringify({
+//
+// 	})
+// 	ajaxPost(contextPath+"/answer", data);
+// 	ajaxGet(contextPath+"/answer/" + el.id, getAnswers);
+// }
 
 // 회원 목록 불러오기
 function getUsers(data){

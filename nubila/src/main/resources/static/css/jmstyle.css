@@ -1,4 +1,57 @@
 @charset "UTF-8";
+/* 헤더 navbar */
+#header {
+    margin: auto;
+    max-width: 1200px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 1.5rem;
+}
+#header h2{ margin: 1rem;}
+/*#header h2,*/
+#header li{
+    font-weight: 600;
+    padding: .5em;
+}
+.nav-menu, .nav-member{
+    display: flex;
+}
+.nav-menu a, .nav-member a {
+    color: #4a4a4a;
+}
+/*:is(.nav-menu, .nav-member) a:hover{*/
+.nav-menu a:hover, .nav-member a:hover{
+    color: #1dc078;
+}
+.nav-logo{
+    flex-grow:1;
+    font-size: 1.5em;
+    font-weight: 800;
+    text-align: center;
+}
+.nav-menu{flex-grow: 3}
+.nav-member{
+    flex-grow:1;
+    justify-content: flex-end;
+}
+.nav-member li {
+    background-color: rgba(69, 120, 220, 0.1);
+    border-radius: 10px;
+    margin-left: 6px;
+}
+.nav-member button {
+    border: none;
+    font-size: 1em;
+    background-color: transparent;
+    font-weight: 600;
+    color: #4a4a4a;
+}
+.nav-toggle-btn {
+    display: none;
+}
+
+/* contianer section*/
 section {
     overflow:hidden;
 }
@@ -14,8 +67,10 @@ section {
     width:70%;
 }
 
-#content-section h1 {
+#content-section h1, #container h1 {
     color: green;
+    margin:20px;
+    font-weight: bold;
 }
 
 #side-menu {
@@ -43,6 +98,15 @@ table{
 
 #title-td{
     cursor: pointer;
+}
+
+#noticelist-btn, #writeanswerbtn {
+    margin-top: 10px;
+    float: right;
+}
+
+#writeinquerybtn {
+    float: right;
 }
 
 /* 모달 영역 */

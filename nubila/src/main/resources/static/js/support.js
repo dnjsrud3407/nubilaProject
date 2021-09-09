@@ -1,10 +1,12 @@
 
 const contextPath = $('#contextPathHolder').attr('data-contextPath') ? $('#contextPathHolder').attr('data-contextPath') : '';
-// DOMLOAD 시, 공지 사항 리스트 불러오기
-document.addEventListener("DOMContentLoaded", ajaxGet(contextPath+"/notice", getNotices));
-
 const token = $("meta[name='_csrf']").attr("content");
 const header = $("meta[name='_csrf_header']").attr("content");
+
+// DOMLOAD 시, 공지 사항 리스트 불러오기
+
+document.addEventListener("DOMContentLoaded", ajaxGet(contextPath+"/notice", getNotices));
+
 
 // 사이드 nav 메뉴 클릭 이벤트 등록s
 let ul = document.querySelector("#side-menu");
@@ -46,10 +48,13 @@ function ajaxGet(url, func) {
 	oReq.send();
 }
 
-function ajaxPost(url, data){
+function ajaxPost(url, data, Get, getUrl, func){
 	let oReq = new XMLHttpRequest();
 	oReq.addEventListener("load", function(){
 		//getajax
+		if (Get) {
+			ajaxGet(getUrl, func);
+		}
 	});
 	oReq.open("POST", url);
 	oReq.setRequestHeader('Content-type', 'application/json');
@@ -104,9 +109,9 @@ function registerInquery(){
 
 	ClassicEditor
 	.create( document.querySelector('#content'))
-	.then( editor => {
-		console.log( editor );
-	} )
+		.then( newEditor => {
+			editor = newEditor;
+		})
 	.catch( error => {
 		console.error( error );
 	} );
@@ -115,7 +120,7 @@ function registerInquery(){
 function writeInquery(){
 	let data = JSON.stringify({
 		title: document.getElementById('title').value,
-		content: document.getElementById('content').value,
+		content: editor.getDate(),
 		status: "normal"
 	})
 	// console.log(data);
@@ -176,8 +181,7 @@ function registerAnswer(){
 		content: document.getElementById('writeanswerarea').value,
 		status:'normal'
 	});
-	ajaxPost(contextPath+"/answer", data);
-	ajaxGet(contextPath+"/answer/"+inqueryId, getAnswersById);
+	ajaxPost(contextPath+"/answer", data, true, contextPath+"/answer/"+inqueryId, getAnswersById);
 	document.getElementById('writeanswerarea').value = "";
 }
 
@@ -187,9 +191,8 @@ function deleteAnswer(){
 		content: document.getElementById("answerContent").innerText,
 		status: 'deleted'
 	})
-	ajaxPost(contextPath+"/answer", data);
 	let inqueryId = document.getElementById("inquery-id").value;
-	ajaxGet(contextPath+"/answer/"+inqueryId, getAnswersById);
+	ajaxPost(contextPath+"/answer", data, true, contextPath+"/answer/"+inqueryId, getAnswersById);
 }
 
 function setInqueryDetail(data){
@@ -217,5 +220,5 @@ function deleteInquery(){
 		content: document.getElementById('inquery-content').innerText,
 		status: "deleted"
 	})
-	ajaxPost(contextPath+"/inquery", data);
+	ajaxPost(contextPath+"/inquery", data, true, contextPath+"/myinquery", getInqueries);
 }
