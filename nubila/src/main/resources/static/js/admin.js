@@ -241,9 +241,11 @@ function setInqueryDetail(data){
     document.getElementById("updatebtn").remove();
     //답변 history 불러오기
     ajaxGet(contextPath+"/answer/" + el.id, getAnswers);
-    modalContent.insertAdjacentHTML("beforeend", "<textarea id='answer'></textarea>");
-	modalContent.insertAdjacentHTML("beforeend", "<button type='button' class='btn btn-success btn-sm' id='answerbtn' onclick='registerAnswer()'>답변 등록</button>");
-    
+
+    modalContent.insertAdjacentHTML("beforeend", "<div class='modal-footer' id='answer-div'><div class='mb-3'>" +
+		"<label for='answer' class='col-form-label'>답변 등록</label>" +
+		"<textarea id='answer' class='form-control'></textarea>" +
+		"<button type='button' class='btn btn-success btn-sm' id='answerbtn' onclick='registerAnswer()'>등록</button></div></div>");
 }
 
 function getAnswers(data){
@@ -253,9 +255,9 @@ function getAnswers(data){
 	let resultHTML = "";
 	data.list.forEach((el) => {
 		if (el.writer == 'USER'){
-			resultHTML += "<li class='list-group-item list-group-item-warning'><span>"+el.writer+": "+el.content+"</span><button type='button' id='answerupdatebtn' class='btn btn-secondary btn-sm' onclick='answerUpdate("+el.id+")'>수정</button></li>"
+			resultHTML += "<li class='list-group-item list-group-item-success'><div>"+el.writer+": "+el.content+"</div><div id='answerCreatedate'>작성일:"+ el.createDate.slice(0, 10) +"</div><button type='button' id='answerupdatebtn' class='btn btn-secondary btn-sm' onclick='answerUpdate("+el.id+")'>수정</button></li>"
 		}else {
-			resultHTML += "<li class='list-group-item'><span>" + el.writer +": " + el.content + "</span><button type='button' id='answerupdatebtn' class='btn btn-secondary btn-sm' onclick='answerUpdate(" + el.id + ")'>수정</button></li>"
+			resultHTML += "<li class='list-group-item'><div>" + el.writer +": " + el.content + "</div><div id='answerCreatedate'>작성일:"+ el.createDate.slice(0, 10) +"</div><button type='button' id='answerupdatebtn' class='btn btn-secondary btn-sm' onclick='answerUpdate(" + el.id + ")'>수정</button></li>"
 		}
 	});
 	answerUl.innerHTML = resultHTML;
@@ -306,7 +308,7 @@ function getUsers(data){
 	let memberlist = document.getElementById('memberlist');
 	let template = document.querySelector("#member-template").innerHTML;
 	let resultHTML = "";
-
+	console.log(data.list);
 	data.list.forEach(el =>
 		resultHTML += template.replace("{user_login_id}", el.user_login_id).replace("{username}", el.username)
 						.replace("{email}", el.email).replace("{role}", el.role)

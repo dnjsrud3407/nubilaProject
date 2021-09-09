@@ -7,9 +7,9 @@
 	  <meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}" />
 	  <title>SUPPORT</title>
 	  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-	  <link th:href="@{/css/haonstyle.css}" rel="stylesheet" />
 	  <link th:href="@{/css/bootstrap.min.css}"
 			href="../css/bootstrap.min.css" rel="stylesheet" />
+	  <link th:href="@{/css/haonstyle.css}" rel="stylesheet" />
 	  <link th:href="@{/css/jmstyle.css}" rel="stylesheet" />
 	  <script type="text/javascript" src="js/header.js" defer></script>
 	  <script src="https://cdn.ckeditor.com/ckeditor5/29.2.0/classic/ckeditor.js"></script>
@@ -35,8 +35,8 @@
 		<table class="table table-bordered">
 		  <thead class="table-success">
 			<tr>
-			  <th scope="col" width="10%">NO.</th>
-			  <th scope="col" width="70%">제목</th>
+			  <th scope="col" width="5%">NO.</th>
+			  <th scope="col" width="75%">제목</th>
 			  <th scope="col" width="20%">작성일</th>
 			</tr>
 		  </thead>
@@ -81,24 +81,25 @@
 	</script>
     <!-- 문의 내역 detail template -->
     <script id="myinquery-template" type="text/template">
+		<h1 id="menu-name">문의 내역</h1>
 	  <input id="inquery-id" type="hidden" value="{id}" />
 	  <div class="card">
 		  <div id="inquery-title" class="card-header">제목: {title}</div>
-		  <div id="inquery-info" class="card-body">작성일: {createDate}, 수정일: {modifyDate}</div>
 		  <div class="card-body">
 			  <p id="inquery-content">{content}</p>
-			  <button type="button" id="deleteInquerybtn" class="btn btn-warning" onlick="deleteInquery()">삭제</button>
 		  </div>
+		  <div id="inquery-info" class="card-body">작성일: {createDate}</div>
 		  <ul id="answers" class="list-group list-group-flush"></ul>
 		  <div class="card-footer">
 			  <div id="writeanswer" class="mb-3">
 				  <h5>답변 등록</h5>
 				  <label for="writeanswerarea" class="form-label">내용</label>
 				<textarea class="form-control" id="writeanswerarea" rows="5"></textarea>
-				<button type="button" id="writeanswerbtn" class="btn btn-success" onclick="registerAnswer()">등록</button>
+				<button type="button" id="writeanswerbtn" class="btn btn-success btn-sm" onclick="registerAnswer()">등록</button>
 			  </div>
 		  </div>
 	  </div>
+	  <button type="button" id="deleteInquerybtn" class="btn btn-warning" onlick="deleteInquery()">삭제</button>
 	  <button type="button" class="btn btn-outline-dark" id="list-btn">목록</button>
 	</script>
 	<!-- 답변 내역 확인 template -->
@@ -107,7 +108,7 @@
 		  <input id="answerId" type="hidden" value="{id}" />
 		  <div>{writer} 답변 내용</div>
 		  <div id="answerContent">{content}</div>
-		  <div>{createDate}</div>
+		  <div id="answerCreatedate">작성일: {createDate}</div>
 	  </li>
 	</script>
     <script th:src="@{/js/support.js}"></script>

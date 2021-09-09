@@ -42,7 +42,7 @@
         UPDATE user SET enabled = false WHERE user_login_id = #{user_login_id}
     </update>
 
-    <select id="getUser" resultType="com.nubila.nubila.user.SecurityUser">
+    <select id="getUser" resultType="com.nubila.nubila.user.User">
         SELECT * FROM user
     </select>
 </mapper>

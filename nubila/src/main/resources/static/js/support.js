@@ -41,10 +41,12 @@ ul.addEventListener("click", function(evt){
 function ajaxGet(url, func) {
 	const oReq = new XMLHttpRequest();
 	oReq.addEventListener("load", function(){
+		//console.log(this.responseText);
 		let data = JSON.parse(this.responseText);
 		func(data);	
 	});
 	oReq.open("GET", url);
+	oReq.setRequestHeader(header, token);
 	oReq.send();
 }
 
@@ -120,7 +122,7 @@ function registerInquery(){
 function writeInquery(){
 	let data = JSON.stringify({
 		title: document.getElementById('title').value,
-		content: editor.getDate(),
+		content: editor.getData(),
 		status: "normal"
 	})
 	// console.log(data);
@@ -162,9 +164,9 @@ function getAnswersById(data){
 		contents.forEach((el) => {
 			resultHTML += template.replace("{id}", el.id).replace("{content}", el.content)
 			.replace("{createDate}", el.createDate.slice(0, 10)).replace("{writer}", el.writer)
-			if (el.writer = "USER"){
+			if (el.writer == "USER"){
 				// 수정, 삭제 버튼 생성
-				resultHTML = resultHTML.slice(0, -7) + "<button type='button' class='btn btn-warning btn-sm' onclick='deleteAnswer()'>삭제</button>" + resultHTML.slice(-7);
+				resultHTML = resultHTML.slice(0, -7) + "<button type='button' class='btn btn-warning btn-sm' id='deleteanswerbtn' onclick='deleteAnswer()'>삭제</button>" + resultHTML.slice(-7);
 				resultHTML = resultHTML.replace("{class}", "");
 			}else {
 				// 색깔 변경
