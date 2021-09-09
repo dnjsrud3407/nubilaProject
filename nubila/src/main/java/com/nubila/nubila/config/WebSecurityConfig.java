@@ -65,7 +65,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public String[] urlPermitAll() {
         String[] urls = new String[] {
                 "/", "/nubila", "/support", "/search", "/nubija", "/accessDenied",
-                "/user/**", "/notice/**"
+                "/user/**", "/notice/**", "/noticedetail/**"
         };
         return urls;
     }
