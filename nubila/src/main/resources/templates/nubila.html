@@ -8,6 +8,7 @@
   <link rel="shortcut icon" sizes="16x16" href="img/icon.png">
   <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
   <link rel="stylesheet" href="css/haonstyle.css">
+  <link rel="stylesheet" href="css/user.css">
   <!--    font awesome   -->
   <script src="https://kit.fontawesome.com/12cca3ed35.js" crossorigin="anonymous"></script>
   <script type="text/javascript" th:src="@{/js/header.js}" defer></script>
@@ -19,7 +20,22 @@
   <div th:replace="fragments/mainImage :: mainImage"></div>
   <hr>
   <div id="section-tip">
-    <h1>어떻게 이용하나요?</h1>
+    <h2 class="nubila_desc">누비자를 더욱 편리하게 사용하자!</h2>
+    <div class="img_desc">
+      <div>
+        <strong class="img_desc_H">정류소 찾기</strong><br>
+        <p>검색한 장소의 주변 정류소를 찾아보세요</p>
+      </div>
+      <div><img class="example_img" th:src="@{/img/example1.png}"></div>
+    </div>
+    <div style="clear:both:"></div>
+    <div class="img_desc">
+      <div>
+        <strong class="img_desc_H">길찾기</strong><br>
+        <p>길찾기를 통해 최단거리의 대여가능한 누비라 정류소와 경로를 탐색할 수 있습니다</p>
+      </div>
+      <div><img class="example_img" th:src="@{/img/example2.png}"></div>
+    </div>
   </div>
 </div>
 </body>
