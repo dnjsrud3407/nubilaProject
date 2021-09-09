@@ -39,7 +39,7 @@ public class NubijaService {
         clientCodecConfigurer.customCodecs().registerWithDefaultConfig(new Jackson2JsonDecoder(new ObjectMapper(), TEXT_HTML));
     }
 
-    @Cacheable(value="NUBIJA", unless = "#result == null", cacheManager = "cacheManager")
+    //@Cacheable(value="NUBIJA", unless = "#result == null", cacheManager = "cacheManager")
     public NubijaResponse getNubijaResponse() {
         log.info("===== 캐싱된 데이터 없음, NUBIJA 데이터 새로 요청 =====");
         String randKey = apikey.getRandNubijaApiKey();
