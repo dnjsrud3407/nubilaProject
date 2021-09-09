@@ -609,7 +609,7 @@ async function searchRoute() {
                             <div class="fw-normal">
                                 빈 보관대 수<span class="number">${DesTerminalInfoList[item.desIndex].Emptycnt}</span>대
                             </div>
-                            <div>총 이동거리<span class="number">${item.route[0].properties.totalDistance.toLocaleString('ko-KR')}</span>>m</div>
+                            <div>총 이동거리<span class="number">${item.route[0].properties.totalDistance.toLocaleString('ko-KR')}</span>m</div>
                         </div>
                     </li>`
             listSection.innerHTML += template;
