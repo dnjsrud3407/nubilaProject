@@ -5,7 +5,6 @@ let isAuthentication = document.querySelector("#authentication");
 
 let latlon = [35.22794668, 128.68185049]; // 창원시청 default
 let myLocation;
-let isLocationAccessed;
 let map;
 let departure;
 let destination;
@@ -150,7 +149,7 @@ async function getNearbyTermianl(pos, title="내 위치") {
     let nubijaResponse = await fetch('/nubija', {headers : {'X-CSRF-TOKEN' : token}});
     let nubijaJson = await nubijaResponse.json();
     let terminalInfoList = nubijaJson.TerminalInfo;
-
+    console.log("hi");
     // 거리계산 후 정렬 (가까운 거리 최대 5개 터미널까지)
     terminalInfoList.forEach( item => {
         item.dist = haversine(pos, [Number(item.Latitude), Number(item.Longitude)]);
@@ -381,9 +380,26 @@ function setDestination(listItem) {
         });
 }
 function switchDepDesHandler() {
+    console.log(departure, destination);
     let temp = departure;
-    departue = destination;
+    departure = destination;
     destination = temp;
+
+    if (depMarker) depMarker.setMap(null);
+    depMarker = new Tmapv2.Marker({
+        position : new Tmapv2.LatLng(departure.lat, departure.lon),
+        icon : "http://topopen.tmap.co.kr/imgs/start.png",
+        title : departure.name,
+        map : map
+    });
+
+    if (desMarker) desMarker.setMap(null);
+    desMarker = new Tmapv2.Marker({
+        position : new Tmapv2.LatLng(destination.lat, destination.lon),
+        icon : "http://topopen.tmap.co.kr/imgs/arrival.png",
+        title : destination.name,
+        map : map
+    });
 
     let tempName = document.querySelector("#dep-search-input").value;
     document.querySelector("#dep-search-input").value = document.querySelector("#des-search-input").value;
@@ -397,7 +413,7 @@ function switchDepDesHandler() {
 // 출발, 도착 버튼 이벤트
 function setDepDesClickHandler(item) {
     // 탭 메뉴 관련 DOM 조작
-    tabMenu.querySelector("#nearby-staion-btn").classList.remove("active");
+    tabMenu.querySelector("#nearby-station-btn").classList.remove("active");
     tabMenu.querySelector("#route-section-btn").classList.add("active");
     let searchContainer = document.querySelector(".search-container");
     searchContainer.querySelector("#search-place-section").classList.add("hidden");
@@ -661,7 +677,7 @@ async function base() {
         //내 근처 터미널 조회
         getNearbyTermianl(latlon);
     } else {
-        tabMenu.querySelector("#nearby-staion-btn").classList.remove("active");
+        tabMenu.querySelector("#nearby-station-btn").classList.remove("active");
         tabMenu.querySelector("#route-section-btn").classList.add("active");
 
         let searchContainer = document.querySelector(".search-container");
@@ -805,12 +821,13 @@ tabMenu.addEventListener('click', (evt) => {
         if (depMarker) depMarker.setMap(null);
         if (desMarker) desMarker.setMap(null);
 
-        if (li.id==="nearby-staion-btn") {
+        if (li.id==="nearby-station-btn") {
             searchPlaceSection.querySelector("#search-input").value = "";
             getNearbyTermianl(latlon);
-        } else if(li.id === "route-section-btn") {
+
             searchRouteSection.querySelector("#dep-search-input").value = "내 위치";
             searchRouteSection.querySelector("#des-search-input").value = "";
+            departure = myLocation;
             destination = null;
         }
     }
