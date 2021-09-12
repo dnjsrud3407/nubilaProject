@@ -12,9 +12,7 @@
 - HTML, CSS, JS, JQuery, Thymleaf
 - Git, Github
 - travis CI, AWS EC2, AWS S3, AWS CodeDeploy
-- Nubija API, Tmap API, CKEditor?
-
-## 시연 영상
+- Nubija API, Tmap API, CKEditor
 
 ## 주요 기능
 
@@ -37,5 +35,15 @@
 
 6. 관리자 서비스
    공지사항 관리와 문의사항 답변 등록이 가능합니다. 또한 전체 회원정보를 확인할 수 있습니다.
-
-## 향후 개발 계획
+   
+## 시연 영상
+[유튜브에서 확인하기](https://youtu.be/ihSPjcd_7fM)  
+   
+   
+<img title="main" src="https://user-images.githubusercontent.com/62924471/132990831-a911da7b-6177-4a69-a00c-1bebea4ba4b8.gif" width="700px">
+<img title="join" src="https://user-images.githubusercontent.com/62924471/132990980-c990eafb-d9f7-4f1d-9b87-a4b45f4a5c36.gif" width="700px">
+<img title="login" src="https://user-images.githubusercontent.com/62924471/132991673-c8b184aa-2b11-4281-8a09-419a1a69d239.gif" width="700px">
+<img title="search" src="https://user-images.githubusercontent.com/62924471/132991423-4ee0b027-a839-4aca-8ccf-4338dd271995.gif" width="700px">
+<img title="mypage" src="https://user-images.githubusercontent.com/62924471/132990988-5c0aa2f5-2098-48c4-b132-51a957059ae3.gif" width="700px">
+<img title="support" src="https://user-images.githubusercontent.com/62924471/132991436-55a0322a-d36c-44dd-9e25-a95e6e8bafb4.gif" width="700px">
+<img title="admin" src="https://user-images.githubusercontent.com/62924471/132991511-d528d43b-9390-49a1-9e52-56334ed30d7d.gif" width="700px">
