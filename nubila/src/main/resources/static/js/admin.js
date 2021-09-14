@@ -163,7 +163,7 @@ function writeNotice(url){
     document.getElementById("createDate-label").remove();
     document.getElementById("modifyDate-label").remove();
     
-	modalContent.insertAdjacentHTML("afterend", "<button type='button' id='registerbtn' class='btn btn-success btn-sm' onclick='registerNotice()'>등록</button>");
+	modalContent.insertAdjacentHTML("beforeend", "<button type='button' id='registerbtn' class='btn btn-success btn-sm' onclick='registerNotice()'>등록</button>");
 }
 
 function registerNotice(){
@@ -257,7 +257,7 @@ function getAnswers(data){
 		if (el.writer == 'USER'){
 			resultHTML += "<li class='list-group-item list-group-item-success'><div>"+el.writer+": "+el.content+"</div><div id='answerCreatedate'>작성일:"+ el.createDate.slice(0, 10) +"</div><button type='button' id='answerupdatebtn' class='btn btn-secondary btn-sm' onclick='answerUpdate("+el.id+")'>수정</button></li>"
 		}else {
-			resultHTML += "<li class='list-group-item'><div>" + el.writer +": " + el.content + "</div><div id='answerCreatedate'>작성일:"+ el.createDate.slice(0, 10) +"</div><button type='button' id='answerupdatebtn' class='btn btn-secondary btn-sm' onclick='answerUpdate(" + el.id + ")'>수정</button></li>"
+			resultHTML += "<li class='list-group-item'><div>" + el.writer +": " + el.content + "</div><div id='answerCreatedate'>작성일:"+ el.createDate.slice(0, 10) +"</div><button type='button' id='answerupdatebtn' class='btn btn-secondary btn-sm' onclick='answerUpdate(" + el.id + ")'>삭제</button></li>"
 		}
 	});
 	answerUl.innerHTML = resultHTML;
@@ -283,7 +283,8 @@ function registerAnswer(){
 function answerUpdate(aid){
 	let data = JSON.stringify({
 	id: aid,
-	content: document.getElementById('answer').value
+	content: document.getElementById('answer').value,
+		status: "deleted"
 	})
 	let inqueryid = document.getElementById('id').value;
 	ajaxPost(contextPath+"/answer", data, contextPath+"/answer/" + inqueryid, getAnswers);
