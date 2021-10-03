@@ -15,7 +15,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import java.time.Duration;
 import java.util.Date;
 
-@Configuration
+//@Configuration
 @EnableCaching
 public class RedisConfig {
     static final int DEFAULT_EXPIRE_SEC = 60; // 1 minutes
