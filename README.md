@@ -8,8 +8,8 @@
 
 ## 개발 환경
 
-- 스프링부트 2.5.3, Gradle, Java 11,
-- HTML, CSS, JS, JQuery, Thymleaf
+- 스프링부트 2.5.3, Gradle, Java 11
+- HTML, CSS, JS, JQuery, Thymeleaf
 - Git, Github
 - travis CI, AWS EC2, AWS S3, AWS CodeDeploy
 - Nubija API, Tmap API, CKEditor
@@ -35,11 +35,11 @@
 
 6. 관리자 서비스
    공지사항 관리와 문의사항 답변 등록이 가능합니다. 또한 전체 회원정보를 확인할 수 있습니다.
-   
+
 ## 시연 영상
-[유튜브에서 확인하기](https://youtu.be/ihSPjcd_7fM)  
-   
-   
+
+[유튜브에서 확인하기](https://youtu.be/ihSPjcd_7fM)
+
 <img title="main" src="https://user-images.githubusercontent.com/62924471/132990831-a911da7b-6177-4a69-a00c-1bebea4ba4b8.gif" width="700px">
 <img title="join" src="https://user-images.githubusercontent.com/62924471/132990980-c990eafb-d9f7-4f1d-9b87-a4b45f4a5c36.gif" width="700px">
 <img title="login" src="https://user-images.githubusercontent.com/62924471/132991673-c8b184aa-2b11-4281-8a09-419a1a69d239.gif" width="700px">

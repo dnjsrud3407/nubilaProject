@@ -31,7 +31,6 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-webflux")
 	implementation("org.springframework.boot:spring-boot-starter-cache")
 	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
-	implementation 'it.ozimov:embedded-redis:0.7.2'
 	compileOnly 'org.projectlombok:lombok'
 	compileOnly('org.springframework.boot:spring-boot-starter-thymeleaf')
 	runtimeOnly('org.springframework.boot:spring-boot-devtools')
@@ -39,6 +38,9 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'
+	testImplementation 'it.ozimov:embedded-redis:0.7.2'
+	testRuntimeOnly 'com.h2database:h2'
+
 }
 
 jar {

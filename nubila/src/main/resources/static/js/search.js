@@ -592,7 +592,7 @@ async function searchRoute() {
             console.log(`response error: tmap 경로 탐색 에러 ${e}`);
         }
         i++
-        await sleep(500); // 티맵 api 무료 이용시 1분에 2회 요청 제한
+        await sleep(500); // 티맵 api 무료 이용시 1초에 2회 요청 제한
     } while (i < passList.length)
 
     routeResult = temp
