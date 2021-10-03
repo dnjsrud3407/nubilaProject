@@ -11,7 +11,8 @@
 - 스프링부트 2.5.3, Gradle, Java 11
 - HTML, CSS, JS, JQuery, Thymeleaf
 - Git, Github
-- travis CI, AWS EC2, AWS S3, AWS CodeDeploy
+- travis CI, Nginx
+- AWS EC2, AWS S3, AWS CodeDeploy
 - Nubija API, Tmap API, CKEditor
 
 ## 주요 기능
